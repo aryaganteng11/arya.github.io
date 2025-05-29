@@ -1,0 +1,2321 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rangkuman Interaktif OSN Matematika SMP 2025</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        // Konfigurasi MathJax untuk rendering LaTeX
+        // Memungkinkan penulisan rumus matematika menggunakan sintaks LaTeX yang akan dirender dengan indah di halaman web.
+        window.MathJax = {
+          tex: {
+            inlineMath: [['$', '$'], ['\\(', '\\)']], // Untuk rumus inline (contoh: $E=mc^2$)
+            displayMath: [['$$', '$$'], ['\\[', '\\]']], // Untuk rumus blok (contoh: $$a^2+b^2=c^2$$)
+            tags: 'ams' // Mengaktifkan penomoran rumus otomatis (misalnya, untuk lingkungan equation)
+          },
+          svg: {
+            fontCache: 'global' // Mengoptimalkan rendering SVG untuk performa yang lebih baik
+          }
+        };
+    </script>
+    <script type="text/javascript" id="MathJax-script" async
+      src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Visualization & Content Choices: 
+        - Info Laporan: Rumus matematika (LaTeX inline, tabel), penjelasan tekstual, daftar. Tujuan: Penyajian konsep dan rumus matematika yang jelas. Viz/Presentasi: Render LaTeX menggunakan MathJax. Tampilkan tabel rumus sebagai tabel HTML yang ditata dengan Tailwind. Konten teks terstruktur dengan heading, paragraf, dan daftar. Interaksi: Navigasi yang dapat diklik, bagian yang dapat dilipat untuk sub-topik menggunakan vanilla JS untuk mengelola content visibility. Justifikasi: MathJax adalah standar untuk rendering matematika web. Tabel HTML sesuai untuk ringkasan rumus tabular. Bagian yang dapat dilipat meningkatkan kemudahan pemindaian. Library/Metode: HTML, Tailwind CSS, Vanilla JS, MathJax CDN.
+        - Note: The source report is mostly text and formulas. Although Chart.js/Plotly.js are mentioned, there is no quantitative data in the report suitable for standard charting. Therefore, these libraries are not actively used for visualization in this SPA, but their CDNs can be included for potential future data integration if the report evolves. No SVG/Mermaid JS charts are used.
+        - New Feature (Gemini API): Practice Question Generator ✨. Purpose: Provide interactive and dynamic practice questions based on selected topics. Viz/Presentation: Trigger button, text area to display questions and solutions. Interaction: Click button to call LLM. Justification: Increases engagement and provides direct practice. Libraries/Methods: HTML, Tailwind CSS, Vanilla JS, Gemini API (gemini-2.0-flash).
+        - New Feature (Gemini API): Difficult Concept Simplifier ✨. Purpose: Provide concise and easy-to-understand explanations for difficult mathematical concepts. Viz/Presentation: Textarea input, trigger button, text area to display explanation. Interaction: Type concept and click button to call LLM. Justification: Aids in deep understanding and accelerates learning. Libraries/Methods: HTML, Tailwind CSS, Vanilla JS, Gemini API (gemini-2.0-flash).
+        - New Feature (Gemini API): Problem Solving Strategy ✨. Purpose: Provide general steps or tips for solving specific types of problems. Viz/Presentation: Textarea input, trigger button, text area to display strategy. Interaction: Type problem type and click button to call LLM. Justification: Develops analytical thinking and problem-solving strategies. Libraries/Methods: HTML, Tailwind CSS, Vanilla JS, Gemini API (gemini-2.0-flash).
+        - New Feature (Gemini API): Answer Checker ✨. Purpose: Analyze user answers to given questions and provide feedback. Viz/Presentation: Textarea input for question and answer, trigger button, text area to display feedback. Interaction: Enter question and answer, click button to call LLM. Justification: Provides immediate evaluation and aids self-correction. Libraries/Methods: HTML, Tailwind CSS, Vanilla JS, Gemini API (gemini-2.0-flash).
+        - Removal: "Introduction" and "Smart Preparation Strategy for OSN" sections have been removed from the application.
+        - Material Content: Updated with user-provided details for Numbers, Algebra, Geometry, and Data & Probability, including formulas and visual descriptions.
+        -->
+    <style>
+        /* Styling dasar untuk body, font, dan warna latar belakang/teks */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #F8F8F8; /* Light Gray Background */
+            color: #333333; /* Dark Gray Text */
+        }
+        /* Styling untuk judul utama dan sub-judul */
+        h1, h2, h3 {
+            font-weight: 700; /* Bolder headings */
+            color: #1A1A1A; /* Almost Black for headings */
+        }
+        /* Styling untuk tautan navigasi aktif */
+        .nav-active {
+            color: #1A1A1A; /* Active nav link almost black */
+            font-weight: 800; /* Extra bold for active */
+            border-bottom: 2px solid #1A1A1A; /* Underline active link */
+        }
+        /* Styling untuk judul bagian konten */
+        .content-section h2 {
+            border-bottom: 2px solid #555555; /* Darker gray border for section titles */
+            padding-bottom: 0.5rem;
+            margin-bottom: 1.5rem;
+            color: #1A1A1A;
+        }
+        /* Styling untuk sub-judul dalam bagian konten */
+        .content-section h3 {
+            color: #333333; /* Dark Gray for sub-headings */
+            margin-top: 1.5rem;
+            margin-bottom: 0.75rem;
+        }
+        /* Styling untuk kontainer tabel */
+        .table-container table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+            margin-bottom: 1rem;
+        }
+        /* Styling untuk header dan sel tabel */
+        .table-container th, .table-container td {
+            border: 1px solid #CCCCCC; /* Medium Gray Border */
+            padding: 0.75rem;
+            text-align: left;
+        }
+        /* Styling untuk header tabel */
+        .table-container th {
+            background-color: #E0E0E0; /* Light Gray Header Background */
+            color: #333333; /* Dark Gray Header Text */
+        }
+        /* Styling untuk tombol akordeon (accordion) */
+        .accordion-button {
+            background-color: #F0F0F0; /* Lighter Gray for accordion buttons */
+            border: 1px solid #CCCCCC; /* Medium Gray Border */
+            color: #333333; /* Dark Gray Text */
+            border-radius: 0.5rem; /* Rounded corners */
+        }
+        /* Efek hover untuk tombol akordeon */
+        .accordion-button:hover {
+            background-color: #E0E0E0; /* Slightly darker on hover */
+        }
+        /* Styling untuk konten akordeon */
+        .accordion-content {
+            border: 1px solid #CCCCCC; /* Medium Gray Border */
+            border-top: none;
+            border-bottom-left-radius: 0.5rem; /* Rounded corners */
+            border-bottom-right-radius: 0.5rem; /* Rounded corners */
+        }
+        /* Styling dasar untuk kotak fitur LLM */
+        .llm-feature-box {
+            background-color: #F5F5F5; /* Very Light Gray */
+            border: 1px dashed #A0A0A0; /* Medium Gray Dashed Border */
+            border-radius: 0.75rem; /* More rounded */
+        }
+        /* Styling dasar untuk tombol LLM */
+        .llm-button {
+            background-color: #333333; /* Dark Gray Button */
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+        /* Efek hover untuk tombol LLM */
+        .llm-button:hover {
+            background-color: #555555; /* Lighter Dark Gray on hover */
+        }
+        /* Styling untuk spinner loading */
+        .loading-spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #333333; /* Spinner color matches button */
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            animation: spin 1s linear infinite;
+        }
+        /* Animasi putar untuk spinner */
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        /* Menyesuaikan warna kotak fitur LLM lainnya agar sesuai dengan skala abu-abu */
+        .llm-feature-box-alt {
+            background-color: #F5F5F5;
+            border: 1px dashed #A0A0A0;
+            border-radius: 0.75rem;
+        }
+        .llm-button-alt {
+            background-color: #4A4A4A; /* Medium Dark Gray */
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+        .llm-button-alt:hover {
+            background-color: #666666; /* Lighter Medium Dark Gray on hover */
+        }
+        .llm-feature-box-tertiary {
+            background-color: #F5F5F5;
+            border: 1px dashed #A0A0A0;
+            border-radius: 0.75rem;
+        }
+        .llm-button-tertiary {
+            background-color: #666666; /* Gray */
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+        .llm-button-tertiary:hover {
+            background-color: #888888; /* Lighter Gray on hover */
+        }
+        .llm-feature-box-fourth {
+            background-color: #F5F5F5;
+            border: 1px dashed #A0A0A0;
+            border-radius: 0.75rem;
+        }
+        .llm-button-fourth:hover {
+            background-color: #AAAAAA; /* Lighter Light Gray on hover */
+        }
+        /* Styling untuk pesan error */
+        .error-message {
+            color: #CC0000; /* Red for error messages */
+            font-weight: 600;
+        }
+        /* Styling untuk placeholder visual */
+        .visual-placeholder {
+            background-color: #EFEFEF;
+            border: 1px solid #DDDDDD;
+            padding: 1rem;
+            margin-top: 1rem;
+            border-radius: 0.5rem;
+            text-align: center;
+            font-style: italic;
+            color: #666666;
+        }
+
+    </style>
+</head>
+<body class="bg-[#F8F8F8] text-[#333333] antialiased">
+
+    <div id="quiz-message-box" class="hidden fixed top-24 left-1/2 -translate-x-1/2 bg-red-500 text-white p-4 rounded-lg shadow-lg z-50 flex items-center justify-between w-11/12 sm:w-1/2 lg:w-1/3">
+        <span id="quiz-message-text"></span>
+        <button id="quiz-message-close" class="text-white ml-4 font-bold text-xl">&times;</button>
+    </div>
+
+    <header class="bg-[#1A1A1A] text-white shadow-md sticky top-0 z-50">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <div class="flex-shrink-0">
+                    <h1 class="text-2xl sm:text-3xl font-bold">OSN Matematika SMP 2025</h1>
+                </div>
+                <nav class="hidden md:block">
+                    <ul class="flex space-x-4">
+                        <li><a href="#bilangan" class="nav-link hover:text-[#CCCCCC] transition-colors px-3 py-2 rounded-md text-sm font-medium">Bilangan</a></li>
+                        <li><a href="#aljabar" class="nav-link hover:text-[#CCCCCC] transition-colors px-3 py-2 rounded-md text-sm font-medium">Aljabar</a></li>
+                        <li><a href="#geometri" class="nav-link hover:text-[#CCCCCC] transition-colors px-3 py-2 rounded-md text-sm font-medium">Geometri</a></li>
+                        <li><a href="#data-peluang" class="nav-link hover:text-[#CCCCCC] transition-colors px-3 py-2 rounded-md text-sm font-medium">Data & Peluang</a></li>
+                        <li><a href="#quiz-mode" class="nav-link hover:text-[#CCCCCC] transition-colors px-3 py-2 rounded-md text-sm font-medium">Kuis</a></li>
+                        <li><a href="#formula-sheet-generator" class="nav-link hover:text-[#CCCCCC] transition-colors px-3 py-2 rounded-md text-sm font-medium">Rumus</a></li>
+                        <li><a href="#deep-concept-discussion" class="nav-link hover:text-[#CCCCCC] transition-colors px-3 py-2 rounded-md text-sm font-medium">Diskusi</a></li>
+                        <li><a href="#common-error-analysis" class="nav-link hover:text-[#CCCCCC] transition-colors px-3 py-2 rounded-md text-sm font-medium">Kesalahan</a></li>
+                        <li><a href="#concept-comparison" class="nav-link hover:text-[#CCCCCC] transition-colors px-3 py-2 rounded-md text-sm font-medium">Perbandingan</a></li>
+                    </ul>
+                </nav>
+                <div class="md:hidden">
+                    <button id="mobile-menu-button" class="text-white hover:text-[#CCCCCC] focus:outline-none">
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div id="mobile-menu" class="md:hidden hidden bg-[#333333]">
+            <ul class="flex flex-col space-y-1 px-2 pt-2 pb-3">
+                <li><a href="#bilangan" class="nav-link block hover:bg-[#555555] hover:text-white px-3 py-2 rounded-md text-base font-medium transition-colors">Bilangan</a></li>
+                <li><a href="#aljabar" class="nav-link block hover:bg-[#555555] hover:text-white px-3 py-2 rounded-md text-base font-medium transition-colors">Aljabar</a></li>
+                <li><a href="#geometri" class="nav-link block hover:bg-[#555555] hover:text-white px-3 py-2 rounded-md text-base font-medium transition-colors">Geometri</a></li>
+                <li><a href="#data-peluang" class="nav-link block hover:bg-[#555555] hover:text-white px-3 py-2 rounded-md text-base font-medium transition-colors">Data & Peluang</a></li>
+                <li><a href="#quiz-mode" class="nav-link block hover:bg-[#555555] hover:text-white px-3 py-2 rounded-md text-base font-medium transition-colors">Kuis Interaktif</a></li>
+                <li><a href="#formula-sheet-generator" class="nav-link block hover:bg-[#555555] hover:text-white px-3 py-2 rounded-md text-base font-medium transition-colors">Generator Lembar Rumus</a></li>
+                <li><a href="#deep-concept-discussion" class="nav-link block hover:bg-[#555555] hover:text-white px-3 py-2 rounded-md text-base font-medium transition-colors">Diskusi Konsep Mendalam</a></li>
+                <li><a href="#common-error-analysis" class="nav-link block hover:bg-[#555555] hover:text-white px-3 py-2 rounded-md text-base font-medium transition-colors">Analisis Kesalahan Umum</a></li>
+                <li><a href="#concept-comparison" class="nav-link block hover:bg-[#555555] hover:text-white px-3 py-2 rounded-md text-base font-medium transition-colors">Perbandingan Konsep</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-4 sm:px-6 lg:px-8 py-8 pt-28">
+        
+        <section id="bilangan" class="content-section mb-12 scroll-mt-24 bg-white p-6 sm:p-8 rounded-lg shadow-lg">
+            <h2 class="text-3xl font-semibold">1. Materi Bilangan</h2>
+            <p class="mb-6 text-lg">Di bagian ini, kamu akan diajak untuk menguasai sifat-sifat dasar dan operasi bilangan (bulat, rasional, akar, dan bilangan berpangkat), Faktor Persekutuan Terbesar (FPB) dan Kelipatan Persekutuan Terkecil (KPK), basis bilangan, serta sisa pembagian. Kompetensi utama adalah penerapan konsep-konsep ini dalam penyelesaian masalah.</p>
+
+            <div class="accordion-item mb-4">
+                <button class="accordion-button w-full text-left px-4 py-3 rounded-t-lg font-semibold text-lg flex justify-between items-center">
+                    Sifat-sifat serta operasi bilangan bulat, rasional, akar, dan bilangan berpangkat
+                    <span class="accordion-icon transform transition-transform duration-300 ">&#9660;</span>
+                </button>
+                <div class="accordion-content p-4 rounded-b-lg hidden">
+                    <p class="mb-2">Memahami jenis-jenis bilangan dan sifat-sifat operasi dasar sangat krusial. Ini termasuk:</p>
+                    <ul class="list-disc list-inside mt-2 space-y-1">
+                        <li><strong>Bilangan Bulat:</strong> Himpunan bilangan utuh (positif, negatif, nol).</li>
+                        <li><strong>Bilangan Rasional:</strong> Bilangan yang dapat dinyatakan sebagai pecahan $a/b$ ($b \neq 0$).</li>
+                        <li><strong>Bilangan Irasional:</strong> Bilangan yang tidak dapat dinyatakan sebagai pecahan $a/b$. Contoh: $\sqrt{2}, \pi, e$. Bilangan irasional memiliki representasi desimal yang tak berulang dan tak berakhir.</li>
+                        <li><strong>Bilangan Prima:</strong> Bilangan asli lebih dari 1 yang hanya memiliki dua faktor: 1 dan dirinya sendiri. Contoh: 2, 3, 5, 7.</li>
+                        <li><strong>Bilangan Komposit:</strong> Bilangan asli lebih dari 1 yang bukan bilangan prima. Contoh: 4, 6, 8, 9.</li>
+                        <li><strong>Bilangan Akar:</strong> Bentuk $\sqrt{a}$. Penting untuk memahami penyederhanaan dan operasi aljabar akar.
+                            <ul class="list-circle list-inside ml-4">
+                                <li>$\sqrt{ab} = \sqrt{a} \times \sqrt{b}$</li>
+                                <li>$\sqrt{a/b} = \sqrt{a} / \sqrt{b}$</li>
+                                <li>$a\sqrt{c} \pm b\sqrt{c} = (a \pm b)\sqrt{c}$</li>
+                                <li>Merasionalkan penyebut: $\frac{a}{\sqrt{b}} = \frac{a\sqrt{b}}{b}$, $\frac{a}{b+\sqrt{c}} = \frac{a(b-\sqrt{c})}{b^2-c}$</li>
+                            </ul>
+                        </li>
+                        <li><strong>Bilangan Berpangkat:</strong> Bentuk $a^n$. Sifat-sifat penting:
+                            <ul class="list-circle list-inside ml-4">
+                                <li>$a^m \times a^n = a^{m+n}$</li>
+                                <li>$a^m / a^n = a^{m-n}$</li>
+                                <li>$(a^m)^n = a^{mn}$</li>
+                                <li>$(ab)^n = a^n b^n$</li>
+                                <li>$(a/b)^n = a^n / b^n$</li>
+                                <li>$a^0 = 1$ (untuk $a \neq 0$)</li>
+                                <li>$a^{-n} = 1/a^n$</li>
+                                <li>$a^{m/n} = \sqrt[n]{a^m}$</li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <p class="mt-4"><strong>Sifat-sifat Bilangan Lainnya:</strong></p>
+                    <ul class="list-disc list-inside mt-2 space-y-1">
+                        <li><strong>Paritas (Ganjil/Genap):</strong>
+                            <ul class="list-circle list-inside ml-4">
+                                <li>Genap $\pm$ Genap = Genap</li>
+                                <li>Ganjil $\pm$ Ganjil = Genap</li>
+                                <li>Genap $\pm$ Ganjil = Ganjil</li>
+                                <li>Genap $\times$ Genap = Genap</li>
+                                <li>Ganjil $\times$ Ganjil = Ganjil</li>
+                                <li>Genap $\times$ Ganjil = Genap</li>
+                            </ul>
+                        </li>
+                        <li><strong>Bilangan Real:</strong> Meliputi semua bilangan rasional dan irasional. Ini adalah himpunan bilangan yang dapat direpresentasikan pada garis bilangan.</li>
+                    </ul>
+                    <div class="visual-placeholder">
+                        [Image of a tree diagram showing number classification: Bilangan Real terbagi menjadi Rasional (yang mencakup Bulat, Cacah, Asli) dan Irasional. Tambah contoh untuk setiap kategori.]
+                    </div>
+                </div>
+            </div>
+            
+            <div class="accordion-item mb-4">
+                <button class="accordion-button w-full text-left px-4 py-3 rounded-t-lg font-semibold text-lg flex justify-between items-center">
+                    Faktor Persekutuan Terbesar (FPB) dan Kelipatan Persekutuan Terkecil (KPK)
+                    <span class="accordion-icon transform transition-transform duration-300 ">&#9660;</span>
+                </button>
+                <div class="accordion-content p-4 rounded-b-lg hidden">
+                    <p class="mb-2"><strong>FPB:</strong> Faktor terbesar yang membagi habis dua bilangan atau lebih.</p>
+                    <p class="mb-2"><strong>KPK:</strong> Kelipatan terkecil yang sama dari dua bilangan atau lebih.</p>
+                    <p class="mt-2"><strong>Metode Faktorisasi Prima:</strong></p>
+                    <ol class="list-decimal list-inside mt-1">
+                        <li>Faktorisasi prima setiap bilangan.</li>
+                        <li><strong>FPB:</strong> Ambil faktor prima yang *sama* dengan pangkat *terkecil*.</li>
+                        <li><strong>KPK:</strong> Ambil *semua* faktor prima dengan pangkat *terbesar*.</li>
+                    </ol>
+                    <h4 class="font-semibold mt-3 mb-1">Tabel 1: Contoh Mencari FPB & KPK</h4>
+                    <div class="table-container overflow-x-auto">
+                        <table>
+                            <thead>
+                                <tr><th>Bilangan</th><th>Faktorisasi Prima</th><th>Faktor untuk FPB</th><th>Faktor untuk KPK</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>12</td><td>$2^2 \times 3$</td><td>$2^1$ (dari 18), $3^1$ (dari 18)</td><td>$2^2$ (dari 12), $3^2$ (dari 18)</td></tr>
+                                <tr><td>18</td><td>$2 \times 3^2$</td><td></td><td></td></tr>
+                                <tr><td><strong>FPB</strong></td><td></td><td>$2 \times 3 = 6$</td><td></td></tr>
+                                <tr><td><strong>KPK</strong></td><td></td><td></td><td>$2^2 \times 3^2 = 4 \times 9 = 36$</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <p class="mt-3">Aplikasi FPB dan KPK seringkali muncul dalam soal cerita yang membutuhkan pemahaman mendalam tentang konteksnya (misalnya, mencari jumlah maksimum kelompok yang sama, atau kapan suatu peristiwa akan terjadi bersamaan lagi).</p>
+                    <div class="visual-placeholder">
+                        [Image of factor tree diagrams for numbers 12 ($12 = 2 \times 2 \times 3$) and 18 ($18 = 2 \times 3 \times 3$). Show how these factors are used to find the GCF and LCM.]
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item mb-4">
+                <button class="accordion-button w-full text-left px-4 py-3 rounded-t-lg font-semibold text-lg flex justify-between items-center">
+                    Teorema dan Dalil Bilangan Lanjutan
+                    <span class="accordion-icon transform transition-transform duration-300 ">&#9660;</span>
+                </button>
+                <div class="accordion-content p-4 rounded-b-lg hidden">
+                    <p class="mb-2"><strong>Algoritma Euclidean:</strong></p>
+                    <p class="mb-2">Metode efisien untuk mencari Faktor Persekutuan Terbesar (FPB) dari dua bilangan bulat. Berdasarkan prinsip bahwa FPB dari dua bilangan tidak berubah jika bilangan yang lebih besar diganti dengan sisa pembagiannya dengan bilangan yang lebih kecil. Proses ini diulang hingga sisa pembagiannya adalah 0, dan FPB adalah sisa pembagian terakhir yang bukan nol.</p>
+                    <p class="text-center my-2">Contoh: FPB(105, 25)</p>
+                    <ol class="list-decimal list-inside ml-4">
+                        <li>$105 = 4 \times 25 + 5$</li>
+                        <li>$25 = 5 \times 5 + 0$</li>
+                    </ol>
+                    <p class="mb-2">FPB(105, 25) = 5.</p>
+                    <div class="visual-placeholder">
+                        [Image of a flowchart illustrating the Euclidean algorithm for finding the greatest common divisor (GCD) of two numbers.]
+                    </div>
+
+                    <p class="mt-4 mb-2"><strong>Teorema Fundamental Aritmetika (Unique Factorization Theorem):</strong></p>
+                    <p class="mb-2">Setiap bilangan bulat lebih besar dari 1 adalah bilangan prima, atau dapat ditulis sebagai hasil kali bilangan prima secara unik (urutan faktor tidak diperhitungkan).</p>
+                    <p class="text-center my-2">Contoh: $12 = 2^2 \times 3$, $30 = 2 \times 3 \times 5$. Faktorisasi ini unik.</p>
+                    <div class="visual-placeholder">
+                        [Image of a factor tree example for a number like 60, showing its unique prime factorization.]
+                    </div>
+
+                    <p class="mt-4 mb-2"><strong>Sifat-sifat Keterbagian Lanjutan:</strong></p>
+                    <ul class="list-disc list-inside mt-1 space-y-1">
+                        <li>Jika $a|b$ (a membagi b) dan $a|c$, maka $a|(bx+cy)$ untuk setiap bilangan bulat $x, y$.</li>
+                        <li>Jika $a|b$ dan $b|c$, maka $a|c$.</li>
+                        <li>Jika $a|bc$ dan FPB($a,b$) = 1, maka $a|c$ (Dalil Gauss tentang Keterbagian).</li>
+                    </ul>
+                    <div class="visual-placeholder">
+                        [Image illustrating basic divisibility properties with numerical examples.]
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item mb-4">
+                <button class="accordion-button w-full text-left px-4 py-3 rounded-t-lg font-semibold text-lg flex justify-between items-center">
+                    Basis Bilangan
+                    <span class="accordion-icon transform transition-transform duration-300 ">&#9660;</span>
+                </button>
+                <div class="accordion-content p-4 rounded-b-lg hidden">
+                    <p class="mb-2">Konsep basis bilangan adalah sistem penulisan angka. Umumnya basis 10 (desimal), namun ada juga basis lain seperti basis 2 (biner) atau basis 5.</p>
+                    <p class="mt-2"><strong>Konversi Antar Basis:</strong></p>
+                    <ul class="list-disc list-inside mt-1 space-y-1">
+                        <li><strong>Dari Basis Lain ke Basis 10:</strong> Kalikan setiap digit dengan basisnya dipangkatkan posisi digit. <br>Contoh: $121_{5} = 1 \times 5^2 + 2 \times 5^1 + 1 \times 5^0 = 25 + 10 + 1 = 36_{10}$.</li>
+                        <li><strong>Dari Basis 10 ke Basis Lain:</strong> Bagi bilangan desimal dengan basis tujuan berulang, lalu ambil sisa pembagiannya dari bawah ke atas. <br>Contoh: $78_{10}$ ke basis 5.
+                            <ul class="list-circle list-inside ml-4">
+                                <li>$78 \div 5 = 15$ sisa $3$</li>
+                                <li>$15 \div 5 = 3$ sisa $0$</li>
+                                <li>$3 \div 5 = 0$ sisa $3$</li>
+                            </ul>
+                            Jadi $78_{10} = 303_{5}$.
+                        </li>
+                    </ul>
+                    <p class="mt-3">Soal OSN dapat melibatkan operasi aritmetika (penjumlahan, pengurangan) antar bilangan dengan basis berbeda, atau mencari pola dalam basis tertentu. Kuncinya adalah memahami nilai tempat setiap digit dalam basis yang berbeda.</p>
+                    <div class="visual-placeholder">
+                        [Image of steps for converting a number from base 10 to base 2 (biner) using repeated division, showing the remainders forming the binary number. Include an example of converting from another base to base 10 as well.]
+                    </div>
+                </div>
+            </div>
+            
+            <div class="accordion-item mb-4">
+                <button class="accordion-button w-full text-left px-4 py-3 rounded-t-lg font-semibold text-lg flex justify-between items-center">
+                    Sisa Pembagian (Modulo)
+                    <span class="accordion-icon transform transition-transform duration-300 ">&#9660;</span>
+                </button>
+                <div class="accordion-content p-4 rounded-b-lg hidden">
+                    <p class="mb-2">Aritmetika modular adalah sistem bilangan di mana angka "melingkar" setelah mencapai nilai tertentu (modulus). Notasinya: $a \equiv b \pmod{n}$ artinya $a$ dan $b$ memiliki sisa yang sama jika dibagi $n$.</p>
+                    <p class="mt-2"><strong>Kaidah-kaidah Penting:</strong></p>
+                    <ul class="list-disc list-inside mt-1 space-y-1">
+                        <li>$(a \pm b) \pmod n = (a \pmod n \pm b \pmod n) \pmod n$.</li>
+                        <li>$(a \times b) \pmod n = (a \pmod n \times b \pmod n) \pmod n$.</li>
+                        <li>$(a^k) \pmod n = ((a \pmod n)^k) \pmod n$.</li>
+                    </ul>
+                    <p class="mt-2"><strong>Teorema Fermat Kecil:</strong> Jika $p$ adalah bilangan prima, maka untuk setiap bilangan bulat $a$ yang tidak habis dibagi $p$, berlaku $a^{p-1} \equiv 1 \pmod p$. Ini sangat berguna untuk menyederhanakan pangkat besar dalam modulo.</p>
+                    <p class="mt-2">Dalam soal OSN, kamu seringkali perlu mencari *siklus* sisa pembagian (misalnya, $2^1 \pmod{10} = 2, 2^2 \pmod{10} = 4, 2^3 \pmod{10} = 8, 2^4 \pmod{10} = 6, 2^5 \pmod{10} = 2, \dots$) untuk menemukan sisa dari bilangan yang sangat besar.</p>
+                    <div class="visual-placeholder">
+                        [Image of a clock face with numbers 0-11, demonstrating how time "circles" after 12, as an analogy for the modulo concept. Include an example of simple modulo calculation.]
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item mb-4">
+                <button class="accordion-button w-full text-left px-4 py-3 rounded-t-lg font-semibold text-lg flex justify-between items-center">
+                    Sifat-sifat Keterbagian (Divisibility Rules)
+                    <span class="accordion-icon transform transition-transform duration-300 ">&#9660;</span>
+                </button>
+                <div class="accordion-content p-4 rounded-b-lg hidden">
+                    <p class="mb-2">Memahami aturan keterbagian sangat membantu dalam soal teori bilangan, terutama untuk menyederhanakan ekspresi atau mencari faktor.</p>
+                    <ul class="list-disc list-inside mt-1 space-y-1">
+                        <li><strong>Keterbagian 2:</strong> Angka terakhir genap.</li>
+                        <li><strong>Keterbagian 3:</strong> Jumlah digitnya habis dibagi 3.</li>
+                        <li><strong>Keterbagian 4:</strong> Dua angka terakhir habis dibagi 4.</li>
+                        <li><strong>Keterbagian 5:</strong> Angka terakhir 0 atau 5.</li>
+                        <li><strong>Keterbagian 6:</strong> Habis dibagi 2 dan 3.</li>
+                        <li><strong>Keterbagian 8:</strong> Tiga angka terakhir habis dibagi 8.</li>
+                        <li><strong>Keterbagian 9:</strong> Jumlah digitnya habis dibagi 9.</li>
+                        <li><strong>Keterbagian 10:</strong> Angka terakhir 0.</li>
+                        <li><strong>Keterbagian 11:</strong> Selisih jumlah digit pada posisi ganjil dan genap adalah 0 atau habis dibagi 11.</li>
+                    </ul>
+                    <div class="visual-placeholder">
+                        [Image of number examples and application of divisibility rules (misal: 123 habis dibagi 3 karena 1+2+3=6, 132 habis dibagi 4 karena 32 habis dibagi 4).]
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <button class="accordion-button w-full text-left px-4 py-3 rounded-t-lg font-semibold text-lg flex justify-between items-center">
+                    Faktorial dan Prinsip Sarang Merpati (Pigeonhole Principle)
+                    <span class="accordion-icon transform transition-transform duration-300 ">&#9660;</span>
+                </button>
+                <div class="accordion-content p-4 rounded-b-lg hidden">
+                    <p class="mb-2"><strong>Faktorial ($n!$):</strong> Hasil kali semua bilangan bulat positif dari 1 hingga $n$. <br>Rumus: $n! = n \times (n-1) \times \dots \times 2 \times 1$. Contoh: $5! = 5 \times 4 \times 3 \times 2 \times 1 = 120$. Faktorial sering muncul dalam soal permutasi dan kombinasi.</p>
+                    <p class="mt-2"><strong>Prinsip Sarang Merpati (Pigeonhole Principle):</strong> Jika ada $n$ merpati ditempatkan dalam $m$ sarang, dan $n > m$, maka setidaknya ada satu sarang yang berisi lebih dari satu merpati. Prinsip ini adalah alat yang ampuh untuk membuktikan keberadaan sesuatu atau mencari nilai minimum/maksimum dalam soal teori bilangan dan kombinatorika.</p>
+                    <div class="visual-placeholder">
+                        [Image of a simple illustration of the pigeonhole principle: 5 merpati masuk ke 4 sarang, menunjukkan satu sarang pasti berisi 2 merpati. Sertakan contoh soal sederhana yang dapat diselesaikan dengan prinsip ini.]
+                    </div>
+                </div>
+            </div>
+
+            <div class="llm-feature-box p-6 rounded-lg mt-8">
+                <h3 class="text-xl font-bold mb-4 flex items-center">Soal Latihan Bilangan ✨</h3>
+                <p class="mb-4">Ingin menguji pemahamanmu tentang Bilangan? Klik tombol di bawah untuk mendapatkan soal latihan acak beserta solusinya!</p>
+                <button id="generate-bilangan-question" class="llm-button">Dapatkan Soal Latihan ✨</button>
+                <div id="bilangan-loading" class="hidden flex justify-center items-center mt-4">
+                    <div class="loading-spinner"></div>
+                    <span class="ml-2 text-gray-600">Memuat soal...</span>
+                </div>
+                <div id="bilangan-output" class="mt-4 p-4 bg-white rounded-md shadow-inner hidden">
+                    <h4 class="font-semibold text-lg mb-2">Soal:</h4>
+                    <div id="bilangan-question-text" class="mb-3"></div>
+                    <h4 class="font-semibold text-lg mb-2">Solusi:</h4>
+                    <div id="bilangan-solution-text"></div>
+                </div>
+            </div>
+
+            <div class="llm-feature-box-alt p-6 rounded-lg mt-8">
+                <h3 class="text-xl font-bold mb-4 flex items-center">Jelaskan Konsep Bilangan Ini ✨</h3>
+                <p class="mb-4">Bingung dengan suatu konsep di materi Bilangan? Ketikkan di bawah dan biarkan AI menjelaskannya untukmu!</p>
+                <textarea id="bilangan-concept-input" class="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-gray-400 focus:border-transparent mb-3" rows="2" placeholder="Contoh: Bilangan Prima, FPB, Modulo"></textarea>
+                <button id="explain-bilangan-concept" class="llm-button-alt">Jelaskan Konsep Ini ✨</button>
+                <div id="bilangan-concept-loading" class="hidden flex justify-center items-center mt-4">
+                    <div class="loading-spinner"></div>
+                    <span class="ml-2 text-gray-600">Menjelaskan konsep...</span>
+                </div>
+                <div id="bilangan-concept-output" class="mt-4 p-4 bg-white rounded-md shadow-inner hidden">
+                    <h4 class="font-semibold text-lg mb-2">Penjelasan:</h4>
+                    <div id="bilangan-explanation-text"></div>
+                </div>
+            </div>
+
+            <div class="llm-feature-box-tertiary p-6 rounded-lg mt-8">
+                <h3 class="text-xl font-bold mb-4 flex items-center">Strategi Pemecahan Masalah Bilangan ✨</h3>
+                <p class="mb-4">Ingin tahu strategi umum untuk jenis soal tertentu di Bilangan? Ketikkan tipe soalnya di bawah!</p>
+                <textarea id="bilangan-strategy-input" class="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-gray-400 focus:border-transparent mb-3" rows="2" placeholder="Contoh: Soal cerita FPB, Soal modulo pangkat besar"></textarea>
+                <button id="generate-bilangan-strategy" class="llm-button-tertiary">Dapatkan Strategi ✨</button>
+                <div id="bilangan-strategy-loading" class="hidden flex justify-center items-center mt-4">
+                    <div class="loading-spinner"></div>
+                    <span class="ml-2 text-gray-600">Memuat strategi...</span>
+                </div>
+                <div id="bilangan-strategy-output" class="mt-4 p-4 bg-white rounded-md shadow-inner hidden">
+                    <h4 class="font-semibold text-lg mb-2">Strategi:</h4>
+                    <div id="bilangan-strategy-text"></div>
+                </div>
+            </div>
+
+            <div class="llm-feature-box-fourth p-6 rounded-lg mt-8">
+                <h3 class="text-xl font-bold mb-4 flex items-center">Periksa Jawaban Bilangan ✨</h3>
+                <p class="mb-4">Masukkan soal dan jawabanmu di bawah, lalu biarkan AI memeriksanya!</p>
+                <textarea id="bilangan-check-input" class="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-gray-400 focus:border-transparent mb-3" rows="4" placeholder="Contoh: Soal: Berapakah FPB dari 12 dan 18? Jawaban: 6"></textarea>
+                <button id="check-bilangan-answer" class="llm-button-fourth">Periksa Jawaban ✨</button>
+                <div id="bilangan-check-loading" class="hidden flex justify-center items-center mt-4">
+                    <div class="loading-spinner"></div>
+                    <span class="ml-2 text-gray-600">Memeriksa jawaban...</span>
+                </div>
+                <div id="bilangan-check-output" class="mt-4 p-4 bg-white rounded-md shadow-inner hidden">
+                    <h4 class="font-semibold text-lg mb-2">Umpan Balik:</h4>
+                    <div id="bilangan-feedback-text"></div>
+                </div>
+            </div>
+        </section>
+
+        <section id="aljabar" class="content-section mb-12 scroll-mt-24 bg-white p-6 sm:p-8 rounded-lg shadow-lg">
+            <h2 class="text-3xl font-semibold">2. Materi Aljabar</h2>
+            <p class="mb-6 text-lg">Di bagian ini, kamu akan menguasai pengertian aljabar, notasi, dan operasi himpunan, relasi, fungsi, grafik, serta perbandingan. Selain itu, kamu akan mendalami operasi aljabar (rasional, berpangkat, akar), persamaan dan pertidaksamaan (linear dan kuadrat), sistem persamaan linear, pola bilangan, barisan, dan deret. Kompetensi utama adalah penerapan konsep-konsep ini dalam penyelesaian masalah.</p>
+            
+            <div class="accordion-item mb-4">
+                <button class="accordion-button w-full text-left px-4 py-3 rounded-t-lg font-semibold text-lg flex justify-between items-center">
+                    Pengertian aljabar, notasi, dan operasi himpunan
+                    <span class="accordion-icon transform transition-transform duration-300 ">&#9660;</span>
+                </button>
+                <div class="accordion-content p-4 rounded-b-lg hidden">
+                    <p class="mb-2"><strong>Aljabar:</strong> Cabang matematika yang menggunakan simbol untuk mewakili bilangan dan kuantitas. Mempelajari struktur, hubungan, dan kuantitas.</p>
+                    <p class="mb-2"><strong>Himpunan:</strong> Kumpulan objek yang terdefinisi dengan jelas.</p>
+                    <ul class="list-disc list-inside mt-1 space-y-1">
+                        <li><strong>Notasi Himpunan:</strong> Contoh $\{x | x > 0, x \in \mathbb{Z}\}$ (himpunan bilangan bulat positif).</li>
+                        <li><strong>Operasi Himpunan:</strong>
+                            <ul class="list-circle list-inside ml-4">
+                                <li><strong>Irisan ($\cap$):</strong> Elemen yang ada di kedua himpunan. Contoh: $A \cap B = \{x | x \in A \text{ dan } x \in B\}$.</li>
+                                <li><strong>Gabungan ($\cup$):</strong> Semua elemen dari kedua himpunan. Contoh: $A \cup B = \{x | x \in A \text{ atau } x \in B\}$.</li>
+                                <li><strong>Komplemen ($A^c$ atau $A'$):</strong> Elemen di semesta yang tidak ada di himpunan $A$.</li>
+                                <li><strong>Selisih ($A - B$):</strong> Elemen di $A$ tapi tidak di $B$. Contoh: $A - B = \{x | x \in A \text{ dan } x \notin B\}$.</li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <p class="mt-2"><strong>Prinsip Inklusi-Eksklusi:</strong> Untuk dua himpunan $A$ dan $B$, $|A \cup B| = |A| + |B| - |A \cap B|$. Prinsip ini dapat diperluas untuk tiga himpunan atau lebih.</p>
+                    <div class="visual-placeholder">
+                        [Image of a Venn diagram with two or three overlapping circles to show intersection, union, and complement of sets. Provide simple examples with numbers.]
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item mb-4">
+                <button class="accordion-button w-full text-left px-4 py-3 rounded-t-lg font-semibold text-lg flex justify-between items-center">
+                    Pengertian relasi, fungsi, grafik, operasi fungsi suku banyak, rasional, berakar, sifat-sifatnya, serta perbandingan senilai dan berbalik nilai
+                    <span class="accordion-icon transform transition-transform duration-300 ">&#9660;</span>
+                </button>
+                <div class="accordion-content p-4 rounded-b-lg hidden">
+                    <p class="mb-2"><strong>Relasi:</strong> Hubungan antara elemen dari dua himpunan.</p>
+                    <p class="mb-2"><strong>Fungsi:</strong> Relasi khusus di mana setiap elemen domain memiliki tepat satu pasangan di kodomain.</p>
+                    <ul class="list-disc list-inside mt-1 space-y-1">
+                        <li><strong>Notasi Fungsi:</strong> $f(x) = y$.</li>
+                        <li><strong>Domain, Kodomain, Range:</strong> Memahami daerah asal, daerah kawan, dan daerah hasil fungsi.</li>
+                        <li><strong>Grafik Fungsi:</strong> Representasi visual fungsi pada bidang koordinat.</li>
+                        <li><strong>Jenis-jenis Fungsi:</strong> 
+                            <ul class="list-circle list-inside ml-4">
+                                <li><strong>Suku Banyak (Polinomial):</strong> Fungsi yang melibatkan penjumlahan suku-suku dengan variabel berpangkat bilangan bulat non-negatif, misal $P(x) = ax^n + bx^{n-1} + \dots + k$.</li>
+                                <li><strong>Rasional:</strong> Fungsi berbentuk pecahan $f(x) = P(x)/Q(x)$, di mana $P(x)$ dan $Q(x)$ adalah polinomial dan $Q(x) \neq 0$.</li>
+                                <li><strong>Berakar:</strong> Fungsi yang melibatkan akar, misal $f(x) = \sqrt{P(x)}$.</li>
+                            </ul>
+                        </li>
+                        <li><strong>Sifat-sifat Fungsi:</strong> 
+                            <ul class="list-circle list-inside ml-4">
+                                <li>Injektif (satu-satu): Setiap elemen kodomain memiliki paling banyak satu pasangan dari domain.</li>
+                                <li>Surjektif (onto): Setiap elemen kodomain memiliki setidaknya satu pasangan dari domain.</li>
+                                <li>Bijektif (korespondensi satu-satu): Fungsi yang injektif dan surjektif.</li>
+                            </ul>
+                        </li>
+                        <li><strong>Operasi Fungsi:</strong> Penjumlahan, pengurangan, perkalian, pembagian, dan komposisi fungsi ($ (f \circ g)(x) = f(g(x)) $).</li>
+                        <li><strong>Fungsi Invers:</strong> Jika $f(x)=y$, maka $f^{-1}(y)=x$. Fungsi invers ada jika fungsi aslinya bijektif.</li>
+                        <li><strong>Perbandingan Senilai:</strong> Jika satu kuantitas meningkat, yang lain juga meningkat dengan rasio yang sama. Contoh: $y = kx$.</li>
+                        <li><strong>Perbandingan Berbalik Nilai:</strong> Jika satu kuantitas meningkat, yang lain menurun. Contoh: $y = k/x$.</li>
+                    </ul>
+                    <div class="visual-placeholder">
+                        [Image of two graphs on a Cartesian plane: one straight line sloping upwards (linear function/direct proportion) and one hyperbolic curve (inverse proportion function). Also add an example graph of a quadratic or simple polynomial function.]
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item mb-4">
+                <button class="accordion-button w-full text-left px-4 py-3 rounded-t-lg font-semibold text-lg flex justify-between items-center">
+                    Operasi aljabar melibatkan bilangan rasional, berpangkat, dan berbentuk akar
+                    <span class="accordion-icon transform transition-transform duration-300 ">&#9660;</span>
+                </button>
+                <div class="accordion-content p-4 rounded-b-lg hidden">
+                    <p class="mb-2">Meliputi penjumlahan, pengurangan, perkalian, dan pembagian pada bentuk-bentuk ini.</p>
+                    <ul class="list-disc list-inside mt-1 space-y-1">
+                        <li><strong>Bilangan Rasional:</strong> Operasi pecahan. Contoh: $\frac{a}{b} + \frac{c}{d} = \frac{ad+bc}{bd}$.</li>
+                        <li><strong>Bilangan Berpangkat:</strong> Sifat-sifat pangkat (sudah dibahas di Bilangan) sangat relevan di sini.</li>
+                        <li><strong>Bentuk Akar:</strong> Penyederhanaan dan operasi akar. Contoh: $\sqrt{a} \times \sqrt{b} = \sqrt{ab}$.</li>
+                        <li><strong>Faktorisasi Aljabar & Identitas Penting:</strong> Mengubah bentuk penjumlahan/pengurangan menjadi perkalian.
+                            <ul class="list-circle list-inside ml-4">
+                                <li>$a^2 - b^2 = (a-b)(a+b)$</li>
+                                <li>$a^3 + b^3 = (a+b)(a^2 - ab + b^2)$</li>
+                                <li>$a^3 - b^3 = (a-b)(a^2 + ab + b^2)$</li>
+                                <li>$(a+b)^2 = a^2 + 2ab + b^2$</li>
+                                <li>$(a-b)^2 = a^2 - 2ab + b^2$</li>
+                                <li>$(a+b)^3 = a^3 + 3a^2b + 3ab^2 + b^3$</li>
+                                <li>$(a-b)^3 = a^3 - 3a^2b + 3ab^2 - b^3$</li>
+                                <li>$(a+b+c)^2 = a^2 + b^2 + c^2 + 2ab + 2ac + 2bc$</li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <p class="mt-3">Soal OSN sering menggunakan manipulasi aljabar yang cerdik, seperti faktorisasi khusus atau identitas aljabar yang tidak standar untuk menyederhanakan ekspresi kompleks atau menyelesaikan persamaan.</p>
+                    <div class="visual-placeholder">
+                        [Image of steps for algebraic factorization $x^2 - 4 = (x-2)(x+2)$ using a square area model. Also add visual examples for $(a+b)^2$ or $(a-b)^2$.]
+                    </div>
+                </div>
+            </div>
+            
+            <div class="accordion-item mb-4">
+                <button class="accordion-button w-full text-left px-4 py-3 rounded-t-lg font-semibold text-lg flex justify-between items-center">
+                    Teorema dan Dalil Aljabar Lanjutan
+                    <span class="accordion-icon transform transition-transform duration-300 ">&#9660;</span>
+                </button>
+                <div class="accordion-content p-4 rounded-b-lg hidden">
+                    <p class="mb-2"><strong>Teorema Sisa Polinomial:</strong></p>
+                    <p class="mb-2">Jika suatu polinomial $P(x)$ dibagi oleh $(x-a)$, maka sisa pembagiannya adalah $P(a)$.</p>
+                    <p class="text-center my-2">Contoh: Jika $P(x) = x^2 + 3x + 2$ dibagi $(x-1)$, sisa adalah $P(1) = 1^2 + 3(1) + 2 = 6$.</p>
+                    <div class="visual-placeholder">
+                        [Image illustrating polynomial long division or synthetic division with an example.]
+                    </div>
+
+                    <p class="mt-4 mb-2"><strong>Teorema Faktor Polinomial:</strong></p>
+                    <p class="mb-2">$(x-a)$ adalah faktor dari polinomial $P(x)$ jika dan hanya jika $P(a) = 0$. Ini adalah konsekuensi langsung dari Teorema Sisa.</p>
+                    <p class="text-center my-2">Contoh: Karena $P(x) = x^2 + 3x + 2$ memiliki akar $x=-1$ (yaitu $P(-1)=0$), maka $(x-(-1)) = (x+1)$ adalah faktornya.</p>
+                    <div class="visual-placeholder">
+                        [Image showing the relationship between roots and factors of a polynomial graphically, e.g., a parabola crossing the x-axis at its roots.]
+                    </div>
+
+                    <p class="mt-4 mb-2"><strong>Ketaksamaan AM-GM (Arithmetic Mean - Geometric Mean):</strong></p>
+                    <p class="mb-2">Untuk bilangan non-negatif $a_1, a_2, \dots, a_n$, berlaku $\frac{a_1 + a_2 + \dots + a_n}{n} \ge \sqrt[n]{a_1 a_2 \dots a_n}$. Kesamaan berlaku jika $a_1 = a_2 = \dots = a_n$. Ini sangat berguna untuk mencari nilai minimum/maksimum.</p>
+                    <p class="text-center my-2">Contoh: Untuk $a,b \ge 0$, $\frac{a+b}{2} \ge \sqrt{ab}$.</p>
+                    <div class="visual-placeholder">
+                        [Image illustrating AM-GM inequality geometrically, e.g., using areas of squares and rectangles.]
+                    </div>
+
+                    <p class="mt-4 mb-2"><strong>Ketaksamaan Cauchy-Schwarz:</strong></p>
+                    <p class="mb-2">Untuk bilangan real $a_1, \dots, a_n$ dan $b_1, \dots, b_n$, berlaku $(a_1b_1 + \dots + a_nb_n)^2 \le (a_1^2 + \dots + a_n^2)(b_1^2 + \dots + b_n^2)$.</p>
+                    <p class="text-center my-2">Contoh: Untuk bilangan real $a,b,x,y$, $(ax+by)^2 \le (a^2+b^2)(x^2+y^2)$.</p>
+                    <div class="visual-placeholder">
+                        [Image illustrating Cauchy-Schwarz inequality using vectors or geometric interpretation.]
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item mb-4">
+                <button class="accordion-button w-full text-left px-4 py-3 rounded-t-lg font-semibold text-lg flex justify-between items-center">
+                    Persamaan linear dan kuadrat dengan satu atau dua peubah
+                    <span class="accordion-icon transform transition-transform duration-300 ">&#9660;</span>
+                </button>
+                <div class="accordion-content p-4 rounded-b-lg hidden">
+                    <p class="mb-2"><strong>Persamaan Linear:</strong> Bentuk $ax + b = 0$ (satu peubah) atau $ax + by = c$ (dua peubah).</p>
+                    <p class="mb-2"><strong>Persamaan Kuadrat:</strong> Bentuk $ax^2 + bx + c = 0$ (satu peubah).</p>
+                    <ul class="list-disc list-inside mt-1 space-y-1">
+                        <li><strong>Rumus ABC:</strong> $x_{1,2} = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}$.</li>
+                        <li><strong>Diskriminan (D):</strong> $D = b^2 - 4ac$. Menentukan jenis akar.
+                            <ul class="list-circle list-inside ml-4">
+                                <li>$D > 0$: 2 akar real beda.</li>
+                                <li>$D = 0$: 2 akar real kembar.</li>
+                                <li>$D < 0$: Tidak ada akar real (imajiner).</li>
+                            </ul>
+                        </li>
+                        <li><strong>Hubungan Akar (Vieta's Formulas):</strong> Jika akarnya $x_1$ dan $x_2$, ada hubungan penting dengan koefisiennya:
+                            <ul class="list-circle list-inside ml-4">
+                                <li>$x_1 + x_2 = -b/a$</li>
+                                <li>$x_1 \times x_2 = c/a$.</li>
+                            </ul>
+                        </li>
+                        <li><strong>Membentuk Persamaan Kuadrat Baru:</strong> Jika diketahui akar-akar $x_1$ dan $x_2$, persamaan kuadratnya adalah $x^2 - (x_1+x_2)x + (x_1x_2) = 0$.</li>
+                    </ul>
+                    <h4 class="font-semibold mt-3 mb-1">Tabel 2: Rumus Persamaan Kuadrat</h4>
+                    <div class="table-container overflow-x-auto">
+                        <table>
+                            <thead>
+                                <tr><th>Konsep</th><th>Rumus</th><th>Keterangan</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>Bentuk Umum</td><td>$ax^2 + bx + c = 0$</td><td>$a \neq 0$, $a, b, c \in \mathbb{R}$</td></tr>
+                                <tr><td>Rumus ABC (Kuadratik)</td><td>$x_{1,2} = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}$</td><td>Mencari akar-akar $x_1$ dan $x_2$</td></tr>
+                                <tr><td>Diskriminan (D)</td><td>$D = b^2 - 4ac$</td><td>Menentukan jenis akar</td></tr>
+                                <tr><td>Jumlah Akar</td><td>$x_1 + x_2 = -b/a$</td><td>Hubungan akar & koefisien</td></tr>
+                                <tr><td>Hasil Kali Akar</td><td>$x_1 \times x_2 = c/a$</td><td>Hubungan akar & koefisien</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <p class="mt-3">Soal OSN sering menguji pemahaman mendalam tentang hubungan antara akar dan koefisien, atau bagaimana sifat diskriminan memengaruhi solusi dalam konteks masalah yang lebih luas (misalnya, mencari nilai minimum/maksimum dari suatu fungsi kuadrat yang terkait dengan kondisi tertentu).</p>
+                    <div class="visual-placeholder">
+                        [Image of three parabola graphs $y=ax^2+bx+c$ on a Cartesian plane, showing cases $D>0$ (memotong sumbu x di dua titik), $D=0$ (menyinggung sumbu x di satu titik), dan $D<0$ (tidak memotong sumbu x). Jelaskan setiap kasus.]
+                    </div>
+                </div>
+            </div>
+            
+            <div class="accordion-item mb-4">
+                <button class="accordion-button w-full text-left px-4 py-3 rounded-t-lg font-semibold text-lg flex justify-between items-center">
+                    Pertidaksamaan linear dan kuadrat dengan satu atau dua peubah
+                    <span class="accordion-icon transform transition-transform duration-300 ">&#9660;</span>
+                </button>
+                <div class="accordion-content p-4 rounded-b-lg hidden">
+                    <p class="mb-2">Mirip persamaan, namun menggunakan tanda ketidaksamaan ($<, >, \le, \ge$). Hati-hati saat mengalikan atau membagi dengan bilangan negatif, arah tanda ketidaksamaan harus dibalik.</p>
+                    <p class="mt-2"><strong>Penyelesaian Pertidaksamaan Kuadrat:</strong> Melibatkan pencarian akar dan uji titik pada garis bilangan.</p>
+                    <div class="visual-placeholder">
+                        [Image of a number line with critical points and shaded solution intervals, showing an example solution for $x^2 - 4 > 0$ or $x^2 - 4 \le 0$. Include an example of linear inequality as well.]
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item mb-4">
+                <button class="accordion-button w-full text-left px-4 py-3 rounded-t-lg font-semibold text-lg flex justify-between items-center">
+                    Sistem persamaan linear dua peubah dan non-linear sederhana
+                    <span class="accordion-icon transform transition-transform duration-300 ">&#9660;</span>
+                </button>
+                <div class="accordion-content p-4 rounded-b-lg hidden">
+                    <p class="mb-2">Sistem persamaan dengan dua variabel (misal $x$ dan $y$) dan dua persamaan.</p>
+                    <p class="mt-2"><strong>Metode Penyelesaian SPLDV:</strong></p>
+                    <ul class="list-disc list-inside mt-1 space-y-1">
+                        <li><strong>Substitusi:</strong> Mengganti satu variabel dari satu persamaan ke persamaan lain.</li>
+                        <li><strong>Eliminasi:</strong> Menghilangkan salah satu variabel dengan menjumlahkan atau mengurangi persamaan.</li>
+                        <li><strong>Grafik:</strong> Mencari titik potong dari dua garis.</li>
+                    </ul>
+                    <p class="mt-2"><strong>Sistem Persamaan Non-Linear Sederhana:</strong> Melibatkan persamaan kuadrat atau bentuk lain (misalnya $x^2+y^2=r^2$ dan $y=mx+c$). Penyelesaian seringkali menggunakan metode substitusi dari persamaan linear ke non-linear.</p>
+                    <div class="visual-placeholder">
+                        [Image of a graph of two intersecting lines at one point on a Cartesian plane, showing the intersection point as the unique solution to a system of linear equations. Also add a graph of a parabola and an intersecting line for a simple non-linear system.]
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <button class="accordion-button w-full text-left px-4 py-3 rounded-t-lg font-semibold text-lg flex justify-between items-center">
+                    Pola bilangan, baris, dan deret
+                    <span class="accordion-icon transform transition-transform duration-300 ">&#9660;</span>
+                </button>
+                <div class="accordion-content p-4 rounded-b-lg hidden">
+                    <p class="mb-2"><strong>Pola Bilangan:</strong> Aturan tertentu dalam susunan bilangan.</p>
+                    <p class="mb-2"><strong>Barisan Aritmetika:</strong> Selisih antar suku berurutan sama (beda $b$).</p>
+                    <ul class="list-disc list-inside mt-1 space-y-1">
+                        <li>Suku ke-n: $U_n = a + (n-1)b$.</li>
+                        <li>Jumlah n Suku: $S_n = \frac{n}{2}(a + U_n)$ atau $S_n = \frac{n}{2}(2a + (n-1)b)$.</li>
+                    </ul>
+                    <h4 class="font-semibold mt-3 mb-1">Tabel 3: Rumus Barisan & Deret Aritmetika</h4>
+                    <div class="table-container overflow-x-auto">
+                         <table>
+                            <thead>
+                                <tr><th>Konsep</th><th>Rumus</th><th>Keterangan</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>Suku ke-n ($U_n$)</td><td>$U_n = a + (n-1)b$</td><td>$a$: suku pertama, $b$: beda, $n$: banyaknya suku</td></tr>
+                                <tr><td>Jumlah n Suku Pertama ($S_n$)</td><td>$S_n = \frac{n}{2}(a + U_n)$ atau $S_n = \frac{n}{2}(2a + (n-1)b)$</td><td></td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <p class="mt-4"><strong>Barisan Geometri:</strong> Rasio antar suku berurutan sama (rasio $r$).</p>
+                    <ul class="list-disc list-inside mt-1 space-y-1">
+                        <li>Suku ke-n: $U_n = ar^{n-1}$.</li>
+                        <li>Jumlah n Suku: Jika $r < 1: S_n = \frac{a(1 - r^n)}{1 - r}$. Jika $r > 1: S_n = \frac{a(r^n - 1)}{r - 1}$.</li>
+                        <li>Deret Geometri Tak Hingga (jika $|r|<1$): $S_\infty = \frac{a}{1-r}$.</li>
+                    </ul>
+                     <h4 class="font-semibold mt-3 mb-1">Tabel 4: Rumus Barisan & Deret Geometri</h4>
+                    <div class="table-container overflow-x-auto">
+                        <table>
+                            <thead>
+                                <tr><th>Konsep</th><th>Rumus</th><th>Keterangan</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>Suku ke-n ($U_n$)</td><td>$U_n = ar^{n-1}$</td><td>$a$: suku pertama, $r$: rasio, $n$: banyaknya suku</td></tr>
+                                <tr><td>Jumlah n Suku Pertama ($S_n$)</td><td>Jika $r < 1: S_n = \frac{a(1 - r^n)}{1 - r}$ <br> Jika $r > 1: S_n = \frac{a(r^n - 1)}{r - 1}$</td><td></td></tr>
+                                <tr><td>Jumlah Tak Hingga ($S_\infty$)</td><td>$S_\infty = \frac{a}{1-r}$</td><td>Hanya berlaku jika $|r|<1$</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <p class="mt-3">Soal OSN sering menggabungkan barisan/deret dengan konsep lain (misalnya, deret bertingkat, deret tak hingga, atau aplikasi dalam masalah gerak). Kadang juga ada soal rekursi atau eksplorasi pola yang tidak standar.</p>
+                    <div class="visual-placeholder">
+                        [Image of two graphs on a Cartesian plane: one showing points forming a straight line (arithmetic sequence) and another showing points forming an exponential curve (geometric sequence). Provide simple number pattern examples.]
+                    </div>
+                </div>
+            </div>
+
+            <div class="llm-feature-box p-6 rounded-lg mt-8">
+                <h3 class="text-xl font-bold mb-4 flex items-center">Soal Latihan Aljabar ✨</h3>
+                <p class="mb-4">Ingin menguji pemahamanmu tentang Aljabar? Klik tombol di bawah untuk mendapatkan soal latihan acak beserta solusinya!</p>
+                <button id="generate-aljabar-question" class="llm-button">Dapatkan Soal Latihan ✨</button>
+                <div id="aljabar-loading" class="hidden flex justify-center items-center mt-4">
+                    <div class="loading-spinner"></div>
+                    <span class="ml-2 text-gray-600">Memuat soal...</span>
+                </div>
+                <div id="aljabar-output" class="mt-4 p-4 bg-white rounded-md shadow-inner hidden">
+                    <h4 class="font-semibold text-lg mb-2">Soal:</h4>
+                    <div id="aljabar-question-text" class="mb-3"></div>
+                    <h4 class="font-semibold text-lg mb-2">Solusi:</h4>
+                    <div id="aljabar-solution-text"></div>
+                </div>
+            </div>
+
+            <div class="llm-feature-box-alt p-6 rounded-lg mt-8">
+                <h3 class="text-xl font-bold mb-4 flex items-center">Jelaskan Konsep Aljabar Ini ✨</h3>
+                <p class="mb-4">Bingung dengan suatu konsep di materi Aljabar? Ketikkan di bawah dan biarkan AI menjelaskannya untukmu!</p>
+                <textarea id="aljabar-concept-input" class="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-gray-400 focus:border-transparent mb-3" rows="2" placeholder="Contoh: Diskriminan, Barisan Geometri, Vieta's Formulas"></textarea>
+                <button id="explain-aljabar-concept" class="llm-button-alt">Jelaskan Konsep Ini ✨</button>
+                <div id="aljabar-concept-loading" class="hidden flex justify-center items-center mt-4">
+                    <div class="loading-spinner"></div>
+                    <span class="ml-2 text-gray-600">Menjelaskan konsep...</span>
+                </div>
+                <div id="aljabar-concept-output" class="mt-4 p-4 bg-white rounded-md shadow-inner hidden">
+                    <h4 class="font-semibold text-lg mb-2">Penjelasan:</h4>
+                    <div id="aljabar-explanation-text"></div>
+                </div>
+            </div>
+
+            <div class="llm-feature-box-tertiary p-6 rounded-lg mt-8">
+                <h3 class="text-xl font-bold mb-4 flex items-center">Strategi Pemecahan Masalah Aljabar ✨</h3>
+                <p class="mb-4">Ingin tahu strategi umum untuk jenis soal tertentu di Aljabar? Ketikkan tipe soalnya di bawah!</p>
+                <textarea id="aljabar-strategy-input" class="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-gray-400 focus:border-transparent mb-3" rows="2" placeholder="Contoh: Persamaan kuadrat akar kembar, Sistem persamaan linear"></textarea>
+                <button id="generate-aljabar-strategy" class="llm-button-tertiary">Dapatkan Strategi ✨</button>
+                <div id="aljabar-strategy-loading" class="hidden flex justify-center items-center mt-4">
+                    <div class="loading-spinner"></div>
+                    <span class="ml-2 text-gray-600">Memuat strategi...</span>
+                </div>
+                <div id="aljabar-strategy-output" class="mt-4 p-4 bg-white rounded-md shadow-inner hidden">
+                    <h4 class="font-semibold text-lg mb-2">Strategi:</h4>
+                    <div id="aljabar-strategy-text"></div>
+                </div>
+            </div>
+
+            <div class="llm-feature-box-fourth p-6 rounded-lg mt-8">
+                <h3 class="text-xl font-bold mb-4 flex items-center">Periksa Jawaban Aljabar ✨</h3>
+                <p class="mb-4">Masukkan soal dan jawabanmu di bawah, lalu biarkan AI memeriksanya!</p>
+                <textarea id="aljabar-check-input" class="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-gray-400 focus:focus:border-transparent mb-3" rows="4" placeholder="Contoh: Soal: Jika $x^2 - 5x + 6 = 0$, berapakah nilai $x$? Jawaban: $x=2$ atau $x=3$"></textarea>
+                <button id="check-aljabar-answer" class="llm-button-fourth">Periksa Jawaban ✨</button>
+                <div id="aljabar-check-loading" class="hidden flex justify-center items-center mt-4">
+                    <div class="loading-spinner"></div>
+                    <span class="ml-2 text-gray-600">Memeriksa jawaban...</span>
+                </div>
+                <div id="aljabar-check-output" class="mt-4 p-4 bg-white rounded-md shadow-inner hidden">
+                    <h4 class="font-semibold text-lg mb-2">Umpan Balik:</h4>
+                    <div id="aljabar-feedback-text"></div>
+                </div>
+            </div>
+        </section>
+
+        <section id="geometri" class="content-section mb-12 scroll-mt-24 bg-white p-6 sm:p-8 rounded-lg shadow-lg">
+            <h2 class="text-3xl font-semibold">3. Materi Geometri</h2>
+            <p class="mb-6 text-lg">Geometri menuntut imajinasi visual dan pemahaman konsep ruang. Di bagian ini, kamu akan menerapkan konsep garis, sudut, teorema Pythagoras, sistem koordinat Kartesius, dan transformasi pada bidang serta ruang untuk menyelesaikan masalah.</p>
+             <div class="accordion-item mb-4">
+                <button class="accordion-button w-full text-left px-4 py-3 rounded-t-lg font-semibold text-lg flex justify-between items-center">
+                    Garis dan sudut, kedudukan dua garis, jarak dua titik dan jarak titik ke garis, serta sifat-sifat sudut
+                    <span class="accordion-icon transform transition-transform duration-300 ">&#9660;</span>
+                </button>
+                <div class="accordion-content p-4 rounded-b-lg hidden">
+                    <p class="mb-2"><strong>Garis:</strong> Kumpulan titik yang memanjang tak terbatas. <strong>Sudut:</strong> Dibentuk oleh dua sinar yang berpotongan pada satu titik (vertex).</p>
+                    <ul class="list-disc list-inside mt-1 space-y-1">
+                        <li><strong>Kedudukan Dua Garis:</strong> Sejajar, berpotongan, berimpit, bersilangan.</li>
+                        <li><strong>Jarak Dua Titik:</strong> Menggunakan rumus jarak di koordinat Kartesius: $d = \sqrt{(x_2-x_1)^2 + (y_2-y_1)^2}$.</li>
+                        <li><strong>Jarak Titik ke Garis:</strong> Membutuhkan pemahaman konsep tegak lurus.</li>
+                        <li><strong>Sifat-sifat Sudut:</strong> Sudut sehadap, berseberangan (dalam/luar), dalam/luar sepihak, berpelurus, berpenyiku.</li>
+                        <li><strong>Jumlah Sudut Segitiga:</strong> $180^\circ$.</li>
+                        <li><strong>Jumlah Sudut Segiempat:</strong> $360^\circ$.</li>
+                        <li><strong>Sudut pada Lingkaran:</strong>
+                            <ul class="list-circle list-inside ml-4">
+                                <li>Sudut Pusat: Sudut yang dibentuk oleh dua jari-jari lingkaran.</li>
+                                <li>Sudut Keliling: Sudut yang dibentuk oleh dua tali busur yang berpotongan di satu titik pada lingkaran. Besar sudut pusat = 2 $\times$ besar sudut keliling yang menghadap busur yang sama.</li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <div class="visual-placeholder">
+                        [Image of two parallel lines intersected by a transversal line, showing pairs of corresponding, alternate, and consecutive interior/exterior angles. Also add an image of a circle with a central angle and an inscribed angle subtending the same arc.]
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item mb-4">
+                <button class="accordion-button w-full text-left px-4 py-3 rounded-t-lg font-semibold text-lg flex justify-between items-center">
+                    Sifat bangun datar, keliling, luas, kesebangunan, dan kekongruenan
+                    <span class="accordion-icon transform transition-transform duration-300 ">&#9660;</span>
+                </button>
+                <div class="accordion-content p-4 rounded-b-lg hidden">
+                    <p class="mb-2">Mencakup persegi, persegi panjang, segitiga, lingkaran, jajar genjang, belah ketupat, dan trapesium.</p>
+                    <h4 class="font-semibold mt-3 mb-1">Tabel 5: Rumus Luas & Keliling Bangun Datar Populer</h4>
+                    <div class="table-container overflow-x-auto">
+                        <table>
+                            <thead>
+                                <tr><th>Bangun Datar</th><th>Rumus Luas</th><th>Rumus Keliling</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>Persegi</td><td>$L = s^2$</td><td>$K = 4s$</td></tr>
+                                <tr><td>Persegi Panjang</td><td>$L = p \times l$</td><td>$K = 2(p+l)$</td></tr>
+                                <tr><td>Segitiga</td><td>$L = \frac{1}{2} \times a \times t$</td><td>$K = a+b+c$</td></tr>
+                                <tr><td>Lingkaran</td><td>$L = \pi r^2$</td><td>$K = 2\pi r$</td></tr>
+                                <tr><td>Jajar Genjang</td><td>$L = a \times t$</td><td>$K = 2(a+b)$</td></tr>
+                                <tr><td>Belah Ketupat</td><td>$L = \frac{1}{2} d_1 d_2$</td><td>$K = 4s$</td></tr>
+                                <tr><td>Trapesium</td><td>$L = \frac{1}{2}(a+b)t$</td><td>$K = a+b+c+d$</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <p class="mt-2"><strong>Kesebangunan (≈):</strong> Bentuk sama, ukuran bisa beda (sisi bersesuaian sebanding, sudut sama besar). Rasio kesebangunan sisi adalah $k$, maka rasio luas adalah $k^2$.</p>
+                    <p class="mt-1"><strong>Kekongruenan (≡ atau ≅):</strong> Bentuk dan ukuran sama persis (sisi dan sudut bersesuaian sama).</p>
+                    <p class="mt-2"><strong>Kesebangunan Segitiga:</strong> Dua segitiga sebangun jika memenuhi salah satu kriteria berikut:
+                        <ul class="list-circle list-inside ml-4">
+                            <li>**Sudut-Sudut-Sudut (AAA):** Ketiga pasang sudut yang bersesuaian sama besar.</li>
+                            <li>**Sisi-Sudut-Sisi (SAS):** Dua pasang sisi yang bersesuaian memiliki perbandingan yang sama, dan sudut apitnya sama besar.</li>
+                            <li>**Sisi-Sisi-Sisi (SSS):** Ketiga pasang sisi yang bersesuaian memiliki perbandingan yang sama.</li>
+                        </ul>
+                    </p>
+                    <p class="mt-2">Soal OSN sering menggunakan kesebangunan untuk menemukan panjang sisi atau luas yang tidak diketahui dalam konfigurasi yang rumit, seperti segitiga yang tumpang tindih atau bersarang.</p>
+                    <div class="visual-placeholder">
+                        [Image of two triangles: one small and one large with the same shape (similarity), and two identical triangles (congruence). Add illustrations for each triangle similarity criterion (AAA, SAS, SSS) with labeled angles and sides.]
+                    </div>
+                </div>
+            </div>
+            
+            <div class="accordion-item mb-4">
+                <button class="accordion-button w-full text-left px-4 py-3 rounded-t-lg font-semibold text-lg flex justify-between items-center">
+                    Teorema Pythagoras
+                    <span class="accordion-icon transform transition-transform duration-300 ">&#9660;</span>
+                </button>
+                <div class="accordion-content p-4 rounded-b-lg hidden">
+                    <p class="mb-2">Berlaku untuk segitiga siku-siku. Jika $a$ dan $b$ adalah panjang sisi tegak, dan $c$ adalah panjang hipotenusa, maka:</p>
+                    <p class="text-center text-xl font-bold my-4">$$a^2 + b^2 = c^2$$</p>
+                    <p class="mt-2">Digunakan untuk mencari panjang sisi yang tidak diketahui pada segitiga siku-siku atau dalam masalah jarak. Penting juga untuk mengenali **Triple Pythagoras** (misalnya 3-4-5, 5-12-13, 7-24-25, 8-15-17).</p>
+                    <div class="visual-placeholder">
+                        [Image of a right triangle with sides labeled $a$, $b$, and $c$ (hipotenusa), serta persegi yang dibangun di atas setiap sisi untuk menunjukkan hubungan area. Sertakan contoh penggunaan Pythagoras dalam soal sederhana.]
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item mb-4">
+                <button class="accordion-button w-full text-left px-4 py-3 rounded-t-lg font-semibold text-lg flex justify-between items-center">
+                    Teorema dan Dalil Geometri Lanjutan
+                    <span class="accordion-icon transform transition-transform duration-300 ">&#9660;</span>
+                </button>
+                <div class="accordion-content p-4 rounded-b-lg hidden">
+                    <p class="mb-2"><strong>Teorema Garis Bagi Sudut:</strong></p>
+                    <p class="mb-2">Dalam sebuah segitiga, garis bagi suatu sudut membagi sisi di hadapannya menjadi dua segmen yang perbandingannya sama dengan perbandingan dua sisi yang membentuk sudut tersebut.</p>
+                    <p class="text-center my-2">Pada $\triangle ABC$, jika $AD$ adalah garis bagi sudut $A$ yang memotong $BC$ di $D$, maka $\frac{BD}{DC} = \frac{AB}{AC}$.</p>
+                    <div class="visual-placeholder">
+                        [Image of a triangle with an angle bisector, clearly labeling the sides and segments as per the theorem.]
+                    </div>
+
+                    <p class="mt-4 mb-2"><strong>Teorema Garis Berat (Teorema Apollonius):</strong></p>
+                    <p class="mb-2">Dalam sebuah segitiga, panjang median $m_a$ ke sisi $a$ dapat dihitung dengan rumus: $m_a^2 = \frac{2b^2 + 2c^2 - a^2}{4}$.</p>
+                    <div class="visual-placeholder">
+                        [Image of a triangle with a median drawn from one vertex to the midpoint of the opposite side.]
+                    </div>
+
+                    <p class="mt-4 mb-2"><strong>Teorema Menelaus:</strong> (Materi Lanjutan OSN)</p>
+                    <p class="mb-2">Untuk segitiga $ABC$ dan garis transversal yang memotong sisi $AB, BC, CA$ (atau perpanjangannya) di titik $D, E, F$ secara berurutan, maka berlaku:</p>
+                    <p class="text-center text-xl font-bold my-4">$$\frac{AD}{DB} \times \frac{BE}{EC} \times \frac{CF}{FA} = 1$$</p>
+                    <div class="visual-placeholder">
+                        [Image of a triangle with a transversal line intersecting its sides (or their extensions), labeling the points of intersection for Menelaus' Theorem.]
+                    </div>
+
+                    <p class="mt-4 mb-2"><strong>Teorema Ceva:</strong> (Materi Lanjutan OSN)</p>
+                    <p class="mb-2">Untuk segitiga $ABC$ dan titik $P$ di dalamnya, jika garis $AD, BE, CF$ adalah cevian yang melalui $P$ (di mana $D, E, F$ berada pada sisi $BC, CA, AB$ secara berurutan), maka berlaku:</p>
+                    <p class="text-center text-xl font-bold my-4">$$\frac{BD}{DC} \times \frac{CE}{EA} \times \frac{AF}{FB} = 1$$</p>
+                    <div class="visual-placeholder">
+                        [Image of a triangle with three concurrent cevians intersecting at an internal point, labeling the segments for Ceva's Theorem.]
+                    </div>
+
+                    <p class="mt-4 mb-2"><strong>Teorema Power of a Point (Teorema Titik Kuasa):</strong></p>
+                    <p class="mb-2">Jika sebuah titik $P$ berada di luar atau di dalam lingkaran, dan garis ditarik dari $P$ yang memotong lingkaran, maka hasil kali segmen-segmennya adalah konstan.</p>
+                    <ul class="list-disc list-inside mt-1 space-y-1">
+                        <li><strong>Kasus 1 (Dua Garis Potong / Secant-Secant):</strong> Jika garis dari $P$ memotong lingkaran di $A, B$ dan garis lain memotong di $C, D$, maka $PA \times PB = PC \times PD$.</li>
+                        <li><strong>Kasus 2 (Garis Singgung dan Garis Potong / Tangent-Secant):</strong> Jika garis dari $P$ menyinggung lingkaran di $T$ dan garis lain memotong di $A, B$, maka $PT^2 = PA \times PB$.</li>
+                        <li><strong>Kasus 3 (Dua Tali Busur Berpotongan di Dalam Lingkaran):</strong> Jika dua tali busur $AB$ dan $CD$ berpotongan di titik $P$ di dalam lingkaran, maka $PA \times PB = PC \times PD$.</li>
+                    </ul>
+                    <div class="visual-placeholder">
+                        [Image illustrating the three cases of the Power of a Point Theorem: two secants from an external point, a tangent and a secant from an external point, and two intersecting chords inside the circle.]
+                    </div>
+
+                    <p class="mt-4 mb-2"><strong>Sifat-sifat Segiempat Tali Busur (Cyclic Quadrilateral):</strong></p>
+                    <p class="mb-2">Segiempat yang keempat titik sudutnya berada pada keliling lingkaran.</p>
+                    <ul class="list-disc list-inside mt-1 space-y-1">
+                        <li>Jumlah sudut berhadapan adalah $180^\circ$. (Contoh: $\angle A + \angle C = 180^\circ$, $\angle B + \angle D = 180^\circ$).</li>
+                        <li>Sudut luar sama dengan sudut dalam yang berhadapan.</li>
+                    </ul>
+                    <div class="visual-placeholder">
+                        [Image of a cyclic quadrilateral inscribed in a circle, showing opposite angles and an exterior angle relation.]
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item mb-4">
+                <button class="accordion-button w-full text-left px-4 py-3 rounded-t-lg font-semibold text-lg flex justify-between items-center">
+                    Transformasi mencakup refleksi, translasi, rotasi, dan dilatasi
+                    <span class="accordion-icon transform transition-transform duration-300 ">&#9660;</span>
+                </button>
+                <div class="accordion-content p-4 rounded-b-lg hidden">
+                    <p class="mb-2">Bagaimana titik atau bangun "bergerak" di bidang koordinat.</p>
+                    <ul class="list-disc list-inside mt-1 space-y-1">
+                        <li><strong>Refleksi (Pencerminan):</strong>
+                            <ul class="list-circle list-inside ml-4">
+                                <li>Sumbu-x: $(x, y) \to (x, -y)$</li>
+                                <li>Sumbu-y: $(x, y) \to (-x, y)$</li>
+                                <li>Garis $y=x$: $(x, y) \to (y, x)$</li>
+                                <li>Garis $y=-x$: $(x, y) \to (-y, -x)$</li>
+                                <li>Garis $x=h$: $(x, y) \to (2h-x, y)$</li>
+                                <li>Garis $y=k$: $(x, y) \to (x, 2k-y)$</li>
+                                <li>Titik $(a,b)$: $(x, y) \to (2a-x, 2b-y)$</li>
+                            </ul>
+                        </li>
+                        <li><strong>Translasi (Pergeseran):</strong> $(x, y) \to (x+a, y+b)$.</li>
+                        <li><strong>Rotasi (Perputaran Pusat (0,0)):</strong>
+                            <ul class="list-circle list-inside ml-4">
+                                <li>$90^\circ$ (searah jarum jam): $(x, y) \to (y, -x)$</li>
+                                <li>$90^\circ$ (berlawanan arah jarum jam): $(x, y) \to (-y, x)$</li>
+                                <li>$180^\circ$: $(x, y) \to (-x, -y)$</li>
+                            </ul>
+                        </li>
+                        <li><strong>Dilatasi (Perkalian Skala Pusat (0,0)):</strong> $(x, y) \to (kx, ky)$. Faktor skala $k$.</li>
+                    </ul>
+                    <p class="mt-3">Soal OSN seringkali melibatkan komposisi beberapa transformasi (misalnya: direfleksi lalu dirotasi) atau mencari titik/garis yang tidak berubah (invariant) setelah transformasi.</p>
+                    <div class="visual-placeholder">
+                        [Image of four separate examples on a Cartesian plane, each showing a point or simple shape undergoing reflection, translation, rotation, and dilation. Show coordinates before and after transformation.]
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item mb-4">
+                <button class="accordion-button w-full text-left px-4 py-3 rounded-t-lg font-semibold text-lg flex justify-between items-center">
+                    Sistem koordinat kartesius dan Persamaan Garis Lurus
+                    <span class="accordion-icon transform transition-transform duration-300 ">&#9660;</span>
+                </button>
+                <div class="accordion-content p-4 rounded-b-lg hidden">
+                    <p class="mb-2">Sistem untuk menentukan posisi titik pada bidang menggunakan pasangan angka (koordinat $x, y$).</p>
+                    <ul class="list-disc list-inside mt-1 space-y-1">
+                        <li>Sumbu horizontal: Sumbu-x (absis).</li>
+                        <li>Sumbu vertikal: Sumbu-y (ordinat).</li>
+                        <li>Titik asal: $(0,0)$.</li>
+                        <li><strong>Jarak Dua Titik:</strong> $d = \sqrt{(x_2-x_1)^2 + (y_2-y_1)^2}$.</li>
+                        <li><strong>Titik Tengah:</strong> $M = \left(\frac{x_1+x_2}{2}, \frac{y_1+y_2}{2}\right)$.</li>
+                        <li><strong>Gradien (Kemiringan) Garis:</strong> $m = \frac{y_2-y_1}{x_2-x_1}$.</li>
+                        <li><strong>Persamaan Garis Lurus:</strong>
+                            <ul class="list-circle list-inside ml-4">
+                                <li>Bentuk umum: $Ax + By + C = 0$ atau $y = mx + c$.</li>
+                                <li>Melalui satu titik $(x_1, y_1)$ dengan gradien $m$: $y - y_1 = m(x - x_1)$.</li>
+                                <li>Melalui dua titik $(x_1, y_1)$ dan $(x_2, y_2)$: $\frac{y-y_1}{y_2-y_1} = \frac{x-x_1}{x_2-x_1}$.</li>
+                                <li>Garis sejajar memiliki gradien yang sama ($m_1 = m_2$).</li>
+                                <li>Garis tegak lurus memiliki hasil kali gradien $-1$ ($m_1 \times m_2 = -1$).</li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <div class="visual-placeholder">
+                        [Image of a Cartesian coordinate plane with X and Y axes, and several points labeled with their coordinates (e.g., $(3,2)$, $(-1,4)$). Also add examples of straight lines with positive and negative gradients, as well as parallel and perpendicular lines.]
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item mb-4">
+                <button class="accordion-button w-full text-left px-4 py-3 rounded-t-lg font-semibold text-lg flex justify-between items-center">
+                    Garis-garis Istimewa pada Segitiga (Tinggi, Berat, Bagi, Sumbu)
+                    <span class="accordion-icon transform transition-transform duration-300 ">&#9660;</span>
+                </button>
+                <div class="accordion-content p-4 rounded-b-lg hidden">
+                    <p class="mb-2">Empat jenis garis istimewa pada segitiga yang sering digunakan dalam soal geometri kompleks:</p>
+                    <ul class="list-disc list-inside mt-1 space-y-1">
+                        <li><strong>Garis Tinggi:</strong> Garis yang ditarik dari titik sudut tegak lurus ke sisi di hadapannya. Titik potongnya disebut **Ortosentrum**.</li>
+                        <li><strong>Garis Berat (Median):</strong> Garis yang ditarik dari titik sudut ke titik tengah sisi di hadapannya. Titik potongnya disebut **Titik Berat (Sentroid)**. Sentroid membagi garis berat dengan rasio 2:1 (dari sudut ke sisi).</li>
+                        <li><strong>Garis Bagi (Angle Bisector):</strong> Garis yang membagi sudut menjadi dua sama besar. Titik potongnya disebut **Incenter** (pusat lingkaran dalam segitiga).</li>
+                        <li><strong>Garis Sumbu (Perpendicular Bisector):</strong> Garis yang tegak lurus dan membagi dua sama panjang suatu sisi. Titik potongnya disebut **Circumcenter** (pusat lingkaran luar segitiga).</li>
+                    </ul>
+                    <div class="visual-placeholder">
+                        [Image of four separate triangle diagrams, each showing one type of special line (tinggi, berat, bagi, sumbu) and its intersection point. Beri label yang jelas untuk setiap garis dan titik.]
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item mb-4">
+                <button class="accordion-button w-full text-left px-4 py-3 rounded-t-lg font-semibold text-lg flex justify-between items-center">
+                    Lingkaran: Sudut Pusat, Sudut Keliling, Garis Singgung, dan Luas Juring/Busur
+                    <span class="accordion-icon transform transition-transform duration-300 ">&#9660;</span>
+                </button>
+                <div class="accordion-content p-4 rounded-b-lg hidden">
+                    <p class="mb-2">Konsep-konsep penting terkait lingkaran:</p>
+                    <ul class="list-disc list-inside mt-1 space-y-1">
+                        <li><strong>Sudut Pusat:</strong> Sudut yang dibentuk oleh dua jari-jari lingkaran.</li>
+                        <li><strong>Sudut Keliling:</strong> Sudut yang dibentuk oleh dua tali busur yang berpotongan di satu titik pada lingkaran.
+                            <ul class="list-circle list-inside ml-4">
+                                <li>Besar sudut pusat = 2 $\times$ besar sudut keliling yang menghadap busur yang sama.</li>
+                                <li>Sudut keliling yang menghadap diameter adalah $90^\circ$.</li>
+                            </ul>
+                        </li>
+                        <li><strong>Garis Singgung Lingkaran:</strong> Garis yang menyentuh lingkaran tepat di satu titik dan tegak lurus terhadap jari-jari di titik singgung tersebut.</li>
+                        <li><strong>Panjang Garis Singgung Persekutuan:</strong> Rumus untuk garis singgung persekutuan luar dan dalam antara dua lingkaran.</li>
+                        <li><strong>Luas Juring:</strong> Luas bagian lingkaran yang dibatasi oleh dua jari-jari dan busur. Rumus: $L_{juring} = \frac{\text{sudut pusat}}{360^\circ} \times \pi r^2$.</li>
+                        <li><strong>Panjang Busur:</strong> Panjang bagian keliling lingkaran. Rumus: $P_{busur} = \frac{\text{sudut pusat}}{360^\circ} \times 2\pi r$.</li>
+                    </ul>
+                    <div class="visual-placeholder">
+                        [Image of a circle with a central angle and an inscribed angle subtending the same arc, and an image of a circle with a tangent line. Also add illustrations of a sector and an arc with shaded areas.]
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <button class="accordion-button w-full text-left px-4 py-3 rounded-t-lg font-semibold text-lg flex justify-between items-center">
+                    Luas permukaan dan volume bangun ruang
+                    <span class="accordion-icon transform transition-transform duration-300 ">&#9660;</span>
+                </button>
+                <div class="accordion-content p-4 rounded-b-lg hidden">
+                    <p class="mb-2">Mencakup kubus, balok, prisma, limas, tabung, kerucut, dan bola.</p>
+                     <h4 class="font-semibold mt-3 mb-1">Tabel 6: Rumus Luas Permukaan & Volume Bangun Ruang Populer</h4>
+                    <div class="table-container overflow-x-auto">
+                        <table>
+                            <thead>
+                                <tr><th>Bangun Ruang</th><th>Rumus Volume</th><th>Rumus Luas Permukaan</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>Kubus</td><td>$V = s^3$</td><td>$L = 6s^2$</td></tr>
+                                <tr><td>Balok</td><td>$V = p \times l \times t$</td><td>$L = 2(pl+pt+lt)$</td></tr>
+                                <tr><td>Prisma</td><td>$V = L_{alas} \times t_{prisma}$</td><td>$L = (2 \times L_{alas}) + K_{alas} \times t_{prisma}$</td></tr>
+                                <tr><td>Limas</td><td>$V = \frac{1}{3} L_{alas} \times t_{limas}$</td><td>$L = L_{alas} + L_{selimut}$</td></tr>
+                                <tr><td>Tabung</td><td>$V = \pi r^2 t$</td><td>$L = 2\pi r(r+t)$</td></tr>
+                                <tr><td>Kerucut</td><td>$V = \frac{1}{3} \pi r^2 t$</td><td>$L = \pi r(r+s)$</td></tr>
+                                <tr><td>Bola</td><td>$V = \frac{4}{3} \pi r^3$</td><td>$L = 4\pi r^2$</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <p class="mt-3">Soal bangun ruang di OSN seringkali melibatkan bangun gabungan, perbandingan volume/luas permukaan, atau masalah optimasi (misalnya: mencari volume maksimum dari bangun yang dibatasi). Kamu juga perlu memahami konsep jaring-jaring bangun ruang dan irisan bangun ruang.</p>
+                    <div class="visual-placeholder">
+                        [Image of simple 3D diagrams of each solid (kubus, balok, tabung, kerucut, bola) with main dimensions labeled (sisi, panjang, lebar, tinggi, jari-jari). Sertakan jaring-jaring bangun ruang sederhana.]
+                    </div>
+                </div>
+            </div>
+
+            <div class="llm-feature-box p-6 rounded-lg mt-8">
+                <h3 class="text-xl font-bold mb-4 flex items-center">Soal Latihan Geometri ✨</h3>
+                <p class="mb-4">Ingin menguji pemahamanmu tentang Geometri? Klik tombol di bawah untuk mendapatkan soal latihan acak beserta solusinya!</p>
+                <button id="generate-geometri-question" class="llm-button">Dapatkan Soal Latihan ✨</button>
+                <div id="geometri-loading" class="hidden flex justify-center items-center mt-4">
+                    <div class="loading-spinner"></div>
+                    <span class="ml-2 text-gray-600">Memuat soal...</span>
+                </div>
+                <div id="geometri-output" class="mt-4 p-4 bg-white rounded-md shadow-inner hidden">
+                    <h4 class="font-semibold text-lg mb-2">Soal:</h4>
+                    <div id="geometri-question-text" class="mb-3"></div>
+                    <h4 class="font-semibold text-lg mb-2">Solusi:</h4>
+                    <div id="geometri-solution-text"></div>
+                </div>
+            </div>
+
+            <div class="llm-feature-box-alt p-6 rounded-lg mt-8">
+                <h3 class="text-xl font-bold mb-4 flex items-center">Jelaskan Konsep Geometri Ini ✨</h3>
+                <p class="mb-4">Bingung dengan suatu konsep di materi Geometri? Ketikkan di bawah dan biarkan AI menjelaskannya untukmu!</p>
+                <textarea id="geometri-concept-input" class="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-gray-400 focus:border-transparent mb-3" rows="2" placeholder="Contoh: Kesebangunan, Teorema Pythagoras, Transformasi Geometri"></textarea>
+                <button id="explain-geometri-concept" class="llm-button-alt">Jelaskan Konsep Ini ✨</button>
+                <div id="geometri-concept-loading" class="hidden flex justify-center items-center mt-4">
+                    <div class="loading-spinner"></div>
+                    <span class="ml-2 text-gray-600">Menjelaskan konsep...</span>
+                </div>
+                <div id="geometri-concept-output" class="mt-4 p-4 bg-white rounded-md shadow-inner hidden">
+                    <h4 class="font-semibold text-lg mb-2">Penjelasan:</h4>
+                    <div id="geometri-explanation-text"></div>
+                </div>
+            </div>
+
+            <div class="llm-feature-box-tertiary p-6 rounded-lg mt-8">
+                <h3 class="text-xl font-bold mb-4 flex items-center">Strategi Pemecahan Masalah Geometri ✨</h3>
+                <p class="mb-4">Ingin tahu strategi umum untuk jenis soal tertentu di Geometri? Ketikkan tipe soalnya di bawah!</p>
+                <textarea id="geometri-strategy-input" class="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-gray-400 focus:border-transparent mb-3" rows="2" placeholder="Contoh: Soal luas bangun gabungan, Soal kesebangunan segitiga"></textarea>
+                <button id="generate-geometri-strategy" class="llm-button-tertiary">Dapatkan Strategi ✨</button>
+                <div id="geometri-strategy-loading" class="hidden flex justify-center items-center mt-4">
+                    <div class="loading-spinner"></div>
+                    <span class="ml-2 text-gray-600">Memuat strategi...</span>
+                </div>
+                <div id="geometri-strategy-output" class="mt-4 p-4 bg-white rounded-md shadow-inner hidden">
+                    <h4 class="font-semibold text-lg mb-2">Strategi:</h4>
+                    <div id="geometri-strategy-text"></div>
+                </div>
+            </div>
+
+            <div class="llm-feature-box-fourth p-6 rounded-lg mt-8">
+                <h3 class="text-xl font-bold mb-4 flex items-center">Periksa Jawaban Geometri ✨</h3>
+                <p class="mb-4">Masukkan soal dan jawabanmu di bawah, lalu biarkan AI memeriksanya!</p>
+                <textarea id="geometri-check-input" class="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-gray-400 focus:border-transparent mb-3" rows="4" placeholder="Contoh: Soal: Sebuah segitiga siku-siku memiliki sisi 3 dan 4. Berapakah panjang hipotenusanya? Jawaban: 5"></textarea>
+                <button id="check-geometri-answer" class="llm-button-fourth">Periksa Jawaban ✨</button>
+                <div id="geometri-check-loading" class="hidden flex justify-center items-center mt-4">
+                    <div class="loading-spinner"></div>
+                    <span class="ml-2 text-gray-600">Memeriksa jawaban...</span>
+                </div>
+                <div id="geometri-check-output" class="mt-4 p-4 bg-white rounded-md shadow-inner hidden">
+                    <h4 class="font-semibold text-lg mb-2">Umpan Balik:</h4>
+                    <div id="geometri-feedback-text"></div>
+                </div>
+            </div>
+        </section>
+
+        <section id="data-peluang" class="content-section mb-12 scroll-mt-24 bg-white p-6 sm:p-8 rounded-lg shadow-lg">
+            <h2 class="text-3xl font-semibold">4. Materi Analisis Data dan Peluang</h2>
+            <p class="mb-6 text-lg">Bagian ini seringkali berkaitan dengan kehidupan sehari-hari dan menguji kemampuan analisis serta logika. Kita akan membahas statistika dasar seperti mean, median, modus, cara penyajian data, hingga konsep peluang yang meliputi aturan pencacahan, permutasi, dan kombinasi.</p>
+            <div class="accordion-item mb-4">
+                <button class="accordion-button w-full text-left px-4 py-3 rounded-t-lg font-semibold text-lg flex justify-between items-center">
+                    Rata-rata, median, modus, dan penafsirannya
+                    <span class="accordion-icon transform transition-transform duration-300 ">&#9660;</span>
+                </button>
+                <div class="accordion-content p-4 rounded-b-lg hidden">
+                    <ul class="list-disc list-inside space-y-1">
+                        <li><strong>Mean (Rata-rata):</strong> Jumlah semua data / banyaknya data.</li>
+                        <li><strong>Median (Nilai Tengah):</strong> Nilai tengah setelah data diurutkan.</li>
+                        <li><strong>Modus (Nilai Paling Sering Muncul):</strong> Nilai paling sering muncul.</li>
+                        <li><strong>Jangkauan (Range):</strong> Selisih antara nilai tertinggi dan terendah.</li>
+                        <li><strong>Kuartil:</strong> Membagi data menjadi empat bagian sama besar (Q1, Q2/Median, Q3).</li>
+                        <li><strong>Varians ($\sigma^2$):</strong> Ukuran seberapa jauh setiap angka dalam set data dari rata-rata. Rumus untuk populasi: $\sigma^2 = \frac{\sum (x_i - \mu)^2}{N}$.</li>
+                        <li><strong>Standar Deviasi ($\sigma$):</strong> Akar kuadrat dari varians, menunjukkan sebaran data.</li>
+                        <li><strong>Jangkauan Interkuartil (IQR):</strong> Selisih antara kuartil ketiga dan kuartil pertama ($IQR = Q3 - Q1$).</li>
+                    </ul>
+                    <p class="mt-2">Soal OSN bisa melibatkan data tidak biasa atau meminta interpretasi yang lebih dalam dari ukuran pemusatan data (misalnya: mencari rata-rata terbesar yang mungkin dari suatu kelompok data dengan kondisi tertentu).</p>
+                    <div class="visual-placeholder">
+                        [Image of a simple diagram showing the positions of mean, median, and mode on a data distribution. Also add a simple box plot to show quartiles and range.]
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item mb-4">
+                <button class="accordion-button w-full text-left px-4 py-3 rounded-t-lg font-semibold text-lg flex justify-between items-center">
+                    Penyajian data berbentuk tabel, diagram, grafik, dan penafsirannya
+                    <span class="accordion-icon transform transition-transform duration-300 ">&#9660;</span>
+                </button>
+                <div class="accordion-content p-4 rounded-b-lg hidden">
+                    <p>Pahami cara membaca dan menafsirkan data dari tabel, diagram batang, lingkaran, atau grafik. Soal bisa meminta analisis lintas representasi atau identifikasi kesalahan.</p>
+                    <ul class="list-disc list-inside mt-1 space-y-1">
+                        <li><strong>Tabel Distribusi Frekuensi:</strong> Mengatur data ke dalam kelas atau kategori dengan frekuensinya.</li>
+                        <li><strong>Diagram Batang (Bar Chart):</strong> Representasi visual data kategorikal.</li>
+                        <li><strong>Diagram Lingkaran (Pie Chart):</strong> Menunjukkan proporsi bagian dari keseluruhan.</li>
+                        <li><strong>Grafik Garis (Line Graph):</strong> Menunjukkan tren data dari waktu ke waktu.</li>
+                        <li><strong>Histogram:</strong> Mirip diagram batang, tetapi untuk data kontinu, batang saling berdekatan.</li>
+                        <li><strong>Poligon Frekuensi:</strong> Garis yang menghubungkan titik tengah bagian atas setiap batang histogram.</li>
+                        <li><strong>Ogive:</strong> Grafik frekuensi kumulatif.</li>
+                    </ul>
+                    <div class="visual-placeholder">
+                        [Image of three data visualization examples: a simple table, a bar chart, and a pie chart with the same data. Also add a histogram example.]
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item mb-4">
+                <button class="accordion-button w-full text-left px-4 py-3 rounded-t-lg font-semibold text-lg flex justify-between items-center">
+                    Peluang meliputi aturan pencacahan, penjumlahan, perkalian, permutasi, kombinasi, dan peluang suatu kejadian
+                    <span class="accordion-icon transform transition-transform duration-300 ">&#9660;</span>
+                </button>
+                <div class="accordion-content p-4 rounded-b-lg hidden">
+                    <ul class="list-disc list-inside space-y-1">
+                        <li><strong>Aturan Pencacahan:</strong> Menghitung banyaknya cara kejadian bisa terjadi.
+                            <ul class="list-circle list-inside ml-4">
+                                <li>**Aturan Penjumlahan:** Jika ada $m$ cara untuk melakukan A dan $n$ cara untuk melakukan B, dan A dan B tidak dapat dilakukan bersamaan, maka ada $m+n$ cara untuk melakukan A atau B.</li>
+                                <li>**Aturan Perkalian:** Jika ada $m$ cara untuk melakukan A dan $n$ cara untuk melakukan B setelah A, maka ada $m \times n$ cara untuk melakukan A dan B.</li>
+                            </ul>
+                        </li>
+                        <li><strong>Permutasi:</strong> Menyusun $k$ dari $n$ unsur *dengan memperhatikan urutan*. Rumus: $P(n,k) = \frac{n!}{(n-k)!}$.
+                            <ul class="list-circle list-inside ml-4">
+                                <li>Permutasi dengan unsur yang sama: $P = \frac{n!}{n_1! n_2! \dots n_k!}$.</li>
+                                <li>Permutasi Siklis: $P_{siklis} = (n-1)!$.</li>
+                            </ul>
+                        </li>
+                        <li><strong>Kombinasi:</strong> Memilih $k$ dari $n$ unsur *tanpa memperhatikan urutan*. Rumus: $C(n,k) = \frac{n!}{k!(n-k)!}$.</li>
+                        <li><strong>Peluang Kejadian A:</strong> $P(A) = \frac{n(A)}{n(S)}$ ($n(A)$ kejadian diinginkan, $n(S)$ ruang sampel).</li>
+                        <li><strong>Peluang Kejadian Komplemen:</strong> $P(A') = 1 - P(A)$.</li>
+                        <li><strong>Peluang Kejadian Saling Bebas (Independent Events):</strong> Dua kejadian A dan B dikatakan saling bebas jika terjadinya satu kejadian tidak mempengaruhi peluang terjadinya kejadian yang lain. Rumus: $P(A \cap B) = P(A) \times P(B)$.</li>
+                        <li><strong>Peluang Kejadian Tidak Saling Bebas (Gabungan):</strong> $P(A \cup B) = P(A) + P(B) - P(A \cap B)$.</li>
+                        <li><strong>Peluang Bersyarat (Conditional Probability):</strong> Peluang kejadian A terjadi, dengan syarat kejadian B sudah terjadi. Rumus: $P(A|B) = \frac{P(A \cap B)}{P(B)}$.</li>
+                    </ul>
+                     <h4 class="font-semibold mt-3 mb-1">Tabel 7: Rumus Permutasi & Kombinasi</h4>
+                    <div class="table-container overflow-x-auto">
+                        <table>
+                            <thead>
+                                <tr><th>Konsep</th><th>Definisi Singkat</th><th>Rumus</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>Permutasi ($P(n,k)$)</td><td>Cara menyusun $k$ unsur dari $n$ unsur dengan *memperhatikan urutan*</td><td>$P(n,k) = \frac{n!}{(n-k)!}$</td></tr>
+                                <tr><td>Kombinasi ($C(n,k)$)</td><td>Cara memilih $k$ unsur dari $n$ unsur *tanpa memperhatikan urutan*</td><td>$C(n,k) = \frac{n!}{k!(n-k)!}$</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <h4 class="font-semibold mt-3 mb-1">Tabel 8: Rumus Peluang Dasar</h4>
+                    <div class="table-container overflow-x-auto">
+                        <table>
+                            <thead>
+                                <tr><th>Konsep</th><th>Rumus</th><th>Keterangan</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>Peluang Kejadian A ($P(A)$)</td><td>$P(A) = \frac{n(A)}{n(S)}$</td><td>$n(A)$: banyaknya kejadian yang diinginkan <br> $n(S)$: banyaknya ruang sampel (semua kemungkinan)</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <p class="mt-2">Soal peluang di OSN seringkali sangat kompleks, melibatkan kejadian majemuk, peluang bersyarat, atau kombinasi dengan prinsip pencacahan yang rumit.</p>
+                    <div class="visual-placeholder">
+                        [Image of selecting balls from a bag to show the difference between permutation (order matters) and combination (order doesn't matter). Also add a Venn diagram for compound probability and a simple illustration for conditional probability.]
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <button class="accordion-button w-full text-left px-4 py-3 rounded-t-lg font-semibold text-lg flex justify-between items-center">
+                    Aksioma dan Dalil Peluang Lanjutan
+                    <span class="accordion-icon transform transition-transform duration-300 ">&#9660;</span>
+                </button>
+                <div class="accordion-content p-4 rounded-b-lg hidden">
+                    <p class="mb-2"><strong>Aksioma Peluang (Kolmogorov's Axioms):</strong></p>
+                    <ul class="list-disc list-inside mt-1 space-y-1">
+                        <li>Untuk setiap kejadian $E$, peluangnya adalah bilangan real non-negatif: $0 \le P(E) \le 1$.</li>
+                        <li>Peluang ruang sampel $S$ (semua kemungkinan hasil) adalah 1: $P(S) = 1$.</li>
+                        <li>Jika $E_1, E_2, \dots$ adalah deretan kejadian yang saling lepas (mutually exclusive), maka peluang gabungan mereka adalah jumlah peluang masing-masing: $P(E_1 \cup E_2 \cup \dots) = P(E_1) + P(E_2) + \dots$.</li>
+                    </ul>
+                    <div class="visual-placeholder">
+                        [Image of a Venn diagram illustrating mutually exclusive events within a sample space.]
+                    </div>
+
+                    <p class="mt-4 mb-2"><strong>Prinsip Inklusi-Eksklusi (untuk Peluang):</strong></p>
+                    <p class="mb-2">Untuk dua kejadian $A$ dan $B$, peluang gabungan mereka adalah $P(A \cup B) = P(A) + P(B) - P(A \cap B)$. Prinsip ini dapat diperluas untuk tiga kejadian atau lebih.</p>
+                    <div class="visual-placeholder">
+                        [Image of a Venn diagram showing two overlapping circles, illustrating the inclusion-exclusion principle for probability.]
+                    </div>
+                </div>
+            </div>
+
+            <div class="llm-feature-box p-6 rounded-lg mt-8">
+                <h3 class="text-xl font-bold mb-4 flex items-center">Soal Latihan Data & Peluang ✨</h3>
+                <p class="mb-4">Ingin menguji pemahamanmu tentang Data & Peluang? Klik tombol di bawah untuk mendapatkan soal latihan acak beserta solusinya!</p>
+                <button id="generate-data-peluang-question" class="llm-button">Dapatkan Soal Latihan ✨</button>
+                <div id="data-peluang-loading" class="hidden flex justify-center items-center mt-4">
+                    <div class="loading-spinner"></div>
+                    <span class="ml-2 text-gray-600">Memuat soal...</span>
+                </div>
+                <div id="data-peluang-output" class="mt-4 p-4 bg-white rounded-md shadow-inner hidden">
+                    <h4 class="font-semibold text-lg mb-2">Soal:</h4>
+                    <div id="data-peluang-question-text" class="mb-3"></div>
+                    <h4 class="font-semibold text-lg mb-2">Solusi:</h4>
+                    <div id="data-peluang-solution-text"></div>
+                </div>
+            </div>
+
+            <div class="llm-feature-box-alt p-6 rounded-lg mt-8">
+                <h3 class="text-xl font-bold mb-4 flex items-center">Jelaskan Konsep Data & Peluang Ini ✨</h3>
+                <p class="mb-4">Bingung dengan suatu konsep di materi Data & Peluang? Ketikkan di bawah dan biarkan AI menjelaskannya untukmu!</p>
+                <textarea id="data-peluang-concept-input" class="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-gray-400 focus:border-transparent mb-3" rows="2" placeholder="Contoh: Permutasi, Kombinasi, Peluang Bersyarat"></textarea>
+                <button id="explain-data-peluang-concept" class="llm-button-alt">Jelaskan Konsep Ini ✨</button>
+                <div id="data-peluang-concept-loading" class="hidden flex justify-center items-center mt-4">
+                    <div class="loading-spinner"></div>
+                    <span class="ml-2 text-gray-600">Menjelaskan konsep...</span>
+                </div>
+                <div id="data-peluang-concept-output" class="mt-4 p-4 bg-white rounded-md shadow-inner hidden">
+                    <h4 class="font-semibold text-lg mb-2">Penjelasan:</h4>
+                    <div id="data-peluang-explanation-text"></div>
+                </div>
+            </div>
+
+            <div class="llm-feature-box-tertiary p-6 rounded-lg mt-8">
+                <h3 class="text-xl font-bold mb-4 flex items-center">Strategi Pemecahan Masalah Data & Peluang ✨</h3>
+                <p class="mb-4">Ingin tahu strategi umum untuk jenis soal tertentu di Data & Peluang? Ketikkan tipe soalnya di bawah!</p>
+                <textarea id="data-peluang-strategy-input" class="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-gray-400 focus:border-transparent mb-3" rows="2" placeholder="Contoh: Soal peluang dengan kombinasi, Analisis data mean median modus"></textarea>
+                <button id="generate-data-peluang-strategy" class="llm-button-tertiary">Dapatkan Strategi ✨</button>
+                <div id="data-peluang-strategy-loading" class="hidden flex justify-center items-center mt-4">
+                    <div class="loading-spinner"></div>
+                    <span class="ml-2 text-gray-600">Memuat strategi...</span>
+                </div>
+                <div id="data-peluang-strategy-output" class="mt-4 p-4 bg-white rounded-md shadow-inner hidden">
+                    <h4 class="font-semibold text-lg mb-2">Strategi:</h4>
+                    <div id="data-peluang-strategy-text"></div>
+                </div>
+            </div>
+
+            <div class="llm-feature-box-fourth p-6 rounded-lg mt-8">
+                <h3 class="text-xl font-bold mb-4 flex items-center">Periksa Jawaban Data & Peluang ✨</h3>
+                <p class="mb-4">Masukkan soal dan jawabanmu di bawah, lalu biarkan AI memeriksanya!</p>
+                <textarea id="data-peluang-check-input" class="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-gray-400 focus:border-transparent mb-3" rows="4" placeholder="Contoh: Soal: Ada 5 kelereng merah dan 3 kelereng biru. Berapa peluang mengambil 2 kelereng merah? Jawaban: 10/28"></textarea>
+                <button id="check-data-peluang-answer" class="llm-button-fourth">Periksa Jawaban ✨</button>
+                <div id="data-peluang-check-loading" class="hidden flex justify-center items-center mt-4">
+                    <div class="loading-spinner"></div>
+                    <span class="ml-2 text-gray-600">Memeriksa jawaban...</span>
+                </div>
+                <div id="data-peluang-check-output" class="mt-4 p-4 bg-white rounded-md shadow-inner hidden">
+                    <h4 class="font-semibold text-lg mb-2">Umpan Balik:</h4>
+                    <div id="data-peluang-feedback-text"></div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="quiz-mode" class="content-section mb-12 scroll-mt-24 bg-white p-6 sm:p-8 rounded-lg shadow-lg">
+            <h2 class="text-3xl font-semibold">5. Mode Kuis Interaktif 🧠</h2>
+            <p class="mb-6 text-lg">Uji pemahamanmu dengan kuis interaktif! Pilih topik, jumlah soal, dan tingkat kesulitan, lalu jawab pertanyaan. Kamu akan langsung mendapatkan umpan balik dan skor.</p>
+
+            <div class="llm-feature-box p-6 rounded-lg mt-8">
+                <h3 class="text-xl font-bold mb-4 flex items-center">Mulai Kuis Baru ✨</h3>
+                <div class="flex flex-col sm:flex-row sm:space-x-4 space-y-4 sm:space-y-0 mb-4">
+                    <div class="flex-1">
+                        <label for="quiz-topic" class="block text-sm font-medium text-gray-700 mb-1">Pilih Topik:</label>
+                        <select id="quiz-topic" class="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-gray-400 focus:border-transparent">
+                            <option value="Bilangan">Bilangan</option>
+                            <option value="Aljabar">Aljabar</option>
+                            <option value="Geometri">Geometri</option>
+                            <option value="Data dan Peluang">Data dan Peluang</option>
+                        </select>
+                    </div>
+                    <div class="flex-1">
+                        <label for="quiz-num-questions" class="block text-sm font-medium text-gray-700 mb-1">Jumlah Soal:</label>
+                        <input type="number" id="quiz-num-questions" value="3" min="1" max="10" class="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-gray-400 focus:border-transparent">
+                    </div>
+                    <div class="flex-1">
+                        <label for="quiz-difficulty" class="block text-sm font-medium text-gray-700 mb-1">Tingkat Kesulitan:</label>
+                        <select id="quiz-difficulty" class="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-gray-400 focus:border-transparent">
+                            <option value="mudah">Mudah</option>
+                            <option value="sedang" selected>Sedang</option>
+                            <option value="sulit">Sulit</option>
+                        </select>
+                    </div>
+                </div>
+                <button id="start-quiz-button" class="llm-button">Mulai Kuis ✨</button>
+                <div id="quiz-loading" class="hidden flex justify-center items-center mt-4">
+                    <div class="loading-spinner"></div>
+                    <span class="ml-2 text-gray-600">Menyiapkan kuis...</span>
+                </div>
+                <div id="quiz-area" class="mt-4 p-4 bg-white rounded-md shadow-inner hidden">
+                    <h4 class="font-semibold text-lg mb-2" id="quiz-question-counter">Soal 1/3:</h4>
+                    <div id="quiz-question-text" class="mb-3"></div>
+                    <textarea id="quiz-answer-input" class="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-gray-400 focus:border-transparent mb-3" rows="3" placeholder="Tulis jawabanmu di sini..."></textarea>
+                    <button id="submit-quiz-answer" class="llm-button-alt">Kirim Jawaban</button>
+                    <div id="quiz-feedback-loading" class="hidden flex justify-center items-center mt-4">
+                        <div class="loading-spinner"></div>
+                        <span class="ml-2 text-gray-600">Memeriksa jawaban...</span>
+                    </div>
+                    <div id="quiz-feedback" class="mt-3 p-3 rounded-md hidden"></div>
+                    <button id="next-quiz-question" class="llm-button-tertiary mt-3 hidden">Soal Berikutnya</button>
+                    <button id="show-quiz-results" class="llm-button-fourth mt-3 hidden">Lihat Hasil Kuis</button>
+                </div>
+                <div id="quiz-results" class="mt-4 p-4 bg-white rounded-md shadow-inner hidden">
+                    <h4 class="font-semibold text-lg mb-2">Hasil Kuis:</h4>
+                    <div id="quiz-score" class="mb-3"></div>
+                    <div id="quiz-summary"></div>
+                    <button id="retake-quiz" class="llm-button mt-4">Ulangi Kuis</button>
+                </div>
+            </div>
+        </section>
+
+        <section id="formula-sheet-generator" class="content-section mb-12 scroll-mt-24 bg-white p-6 sm:p-8 rounded-lg shadow-lg">
+            <h2 class="text-3xl font-semibold">6. Generator Lembar Rumus 📝</h2>
+            <p class="mb-6 text-lg">Butuh rangkuman rumus cepat? Pilih topik, dan AI akan membuatkan lembar rumus yang bisa kamu gunakan untuk belajar atau referensi.</p>
+
+            <div class="llm-feature-box p-6 rounded-lg mt-8">
+                <h3 class="text-xl font-bold mb-4 flex items-center">Buat Lembar Rumus ✨</h3>
+                <label for="formula-topic" class="block text-sm font-medium text-gray-700 mb-1">Pilih Topik Rumus:</label>
+                <select id="formula-topic" class="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-gray-400 focus:border-transparent mb-3">
+                    <option value="Bilangan">Bilangan</option>
+                    <option value="Aljabar">Aljabar</option>
+                    <option value="Geometri">Geometri</option>
+                    <option value="Data dan Peluang">Data dan Peluang</option>
+                </select>
+                <button id="generate-formula-sheet" class="llm-button">Buat Lembar Rumus ✨</button>
+                <div id="formula-loading" class="hidden flex justify-center items-center mt-4">
+                    <div class="loading-spinner"></div>
+                    <span class="ml-2 text-gray-600">Membuat lembar rumus...</span>
+                </div>
+                <div id="formula-output" class="mt-4 p-4 bg-white rounded-md shadow-inner hidden">
+                    <h4 class="font-semibold text-lg mb-2">Lembar Rumus:</h4>
+                    <div id="formula-text"></div>
+                </div>
+            </div>
+        </section>
+
+        <section id="deep-concept-discussion" class="content-section mb-12 scroll-mt-24 bg-white p-6 sm:p-8 rounded-lg shadow-lg">
+            <h2 class="text-3xl font-semibold">7. Diskusi Konsep Mendalam 💬</h2>
+            <p class="mb-6 text-lg">Punya pertanyaan yang lebih spesifik atau ingin mendalami suatu konsep? Ketikkan pertanyaanmu di bawah, dan AI akan berusaha memberikan penjelasan yang lebih detail dan komprehensif.</p>
+
+            <div class="llm-feature-box p-6 rounded-lg mt-8">
+                <h3 class="text-xl font-bold mb-4 flex items-center">Tanyakan Lebih Dalam ✨</h3>
+                <textarea id="deep-concept-input" class="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-gray-400 focus:border-transparent mb-3" rows="4" placeholder="Contoh: Jelaskan mengapa AM-GM berlaku untuk bilangan non-negatif."></textarea>
+                <button id="ask-deep-concept" class="llm-button-alt">Tanyakan Konsep ✨</button>
+                <div id="deep-concept-loading" class="hidden flex justify-center items-center mt-4">
+                    <div class="loading-spinner"></div>
+                    <span class="ml-2 text-gray-600">Mendalami konsep...</span>
+                </div>
+                <div id="deep-concept-output" class="mt-4 p-4 bg-white rounded-md shadow-inner hidden">
+                    <h4 class="font-semibold text-lg mb-2">Penjelasan Mendalam:</h4>
+                    <div id="deep-concept-text"></div>
+                </div>
+            </div>
+        </section>
+
+        <section id="common-error-analysis" class="content-section mb-12 scroll-mt-24 bg-white p-6 sm:p-8 rounded-lg shadow-lg">
+            <h2 class="text-3xl font-semibold">8. Analisis Kesalahan Umum ⚠️</h2>
+            <p class="mb-6 text-lg">Pelajari dari kesalahan! Pilih topik, dan AI akan menjelaskan kesalahan umum yang sering dilakukan siswa dalam topik tersebut dan bagaimana cara menghindarinya.</p>
+
+            <div class="llm-feature-box p-6 rounded-lg mt-8">
+                <h3 class="text-xl font-bold mb-4 flex items-center">Lihat Kesalahan Umum ✨</h3>
+                <label for="error-topic" class="block text-sm font-medium text-gray-700 mb-1">Pilih Topik:</label>
+                <select id="error-topic" class="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-gray-400 focus:border-transparent mb-3">
+                    <option value="Bilangan">Bilangan</option>
+                    <option value="Aljabar">Aljabar</option>
+                    <option value="Geometri">Geometri</option>
+                    <option value="Data dan Peluang">Data dan Peluang</option>
+                </select>
+                <button id="analyze-common-error" class="llm-button-tertiary">Analisis Kesalahan ✨</button>
+                <div id="error-loading" class="hidden flex justify-center items-center mt-4">
+                    <div class="loading-spinner"></div>
+                    <span class="ml-2 text-gray-600">Menganalisis kesalahan...</span>
+                </div>
+                <div id="error-output" class="mt-4 p-4 bg-white rounded-md shadow-inner hidden">
+                    <h4 class="font-semibold text-lg mb-2">Kesalahan Umum & Solusi:</h4>
+                    <div id="error-text"></div>
+                </div>
+            </div>
+        </section>
+
+        <section id="concept-comparison" class="content-section mb-12 scroll-mt-24 bg-white p-6 sm:p-8 rounded-lg shadow-lg">
+            <h2 class="text-3xl font-semibold">9. Perbandingan Konsep ⚖️</h2>
+            <p class="mb-6 text-lg">Sering bingung bedanya dua konsep yang mirip? Masukkan dua konsep, dan AI akan membandingkan persamaan dan perbedaannya.</p>
+
+            <div class="llm-feature-box p-6 rounded-lg mt-8">
+                <h3 class="text-xl font-bold mb-4 flex items-center">Bandingkan Konsep ✨</h3>
+                <input type="text" id="concept1-input" class="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-gray-400 focus:border-transparent mb-3" placeholder="Konsep 1 (misal: Permutasi)">
+                <input type="text" id="concept2-input" class="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-gray-400 focus:border-transparent mb-3" placeholder="Konsep 2 (misal: Kombinasi)">
+                <button id="compare-concepts" class="llm-button-fourth">Bandingkan ✨</button>
+                <div id="comparison-loading" class="hidden flex justify-center items-center mt-4">
+                    <div class="loading-spinner"></div>
+                    <span class="ml-2 text-gray-600">Membandingkan konsep...</span>
+                </div>
+                <div id="comparison-output" class="mt-4 p-4 bg-white rounded-md shadow-inner hidden">
+                    <h4 class="font-semibold text-lg mb-2">Perbandingan:</h4>
+                    <div id="comparison-text"></div>
+                </div>
+            </div>
+        </section>
+
+        <footer class="text-center py-8 mt-12 border-t border-gray-300">
+            <p class="text-gray-600">&copy; <span id="currentYear"></span> Rangkuman Interaktif OSN Matematika SMP. Semangat Berjuang!</p>
+        </footer>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Set current year in the footer
+            const currentYearSpan = document.getElementById('currentYear');
+            if (currentYearSpan) {
+                currentYearSpan.textContent = new Date().getFullYear();
+            }
+
+            // Logic for mobile menu button
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            if (mobileMenuButton && mobileMenu) {
+                mobileMenuButton.addEventListener('click', function () {
+                    mobileMenu.classList.toggle('hidden');
+                });
+            }
+            
+            // Logic for smooth scroll navigation and active indicator
+            const navLinks = document.querySelectorAll('.nav-link');
+            navLinks.forEach(link => {
+                link.addEventListener('click', function(event) {
+                    event.preventDefault(); // Prevent default link behavior
+                    const targetId = this.getAttribute('href').substring(1); // Get target ID without '#'
+                    const targetSection = document.getElementById(targetId);
+                    if (targetSection) {
+                        // Scroll to the target section smoothly
+                        targetSection.scrollIntoView({ behavior: 'smooth' });
+                        // Close mobile menu if open
+                        if (mobileMenu && !mobileMenu.classList.contains('hidden')) {
+                            mobileMenu.classList.add('hidden');
+                        }
+                        // Update active navigation class
+                        document.querySelectorAll('.nav-link').forEach(nav => nav.classList.remove('nav-active'));
+                        this.classList.add('nav-active');
+                    }
+                });
+            });
+
+            // Intersection Observer to update active navigation link when scrolling
+            const observerOptions = {
+                root: null, // Observe the viewport
+                rootMargin: '0px',
+                threshold: 0.4 // Trigger when 40% of the section is visible
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    const id = entry.target.getAttribute('id');
+                    const navLink = document.querySelector(`.nav-link[href="#${id}"]`);
+
+                    if (navLink) {
+                         if (entry.isIntersecting) {
+                            document.querySelectorAll('.nav-link').forEach(link => link.classList.remove('nav-active'));
+                            navLink.classList.add('nav-active');
+                        } else {
+                            // Optional: Remove active class when not visible, or keep it active until another section is visible
+                        }
+                    }
+                });
+            }, observerOptions);
+
+            // Observe each content section for Intersection Observer
+            document.querySelectorAll('.content-section').forEach(section => {
+                observer.observe(section);
+            });
+
+            // Logic for accordion functionality (open/close material sections)
+            const accordionItems = document.querySelectorAll('.accordion-item');
+            accordionItems.forEach(item => {
+                const button = item.querySelector('.accordion-button');
+                const content = item.querySelector('.accordion-content');
+                const icon = button.querySelector('.accordion-icon');
+
+                if (button && content && icon) {
+                    button.addEventListener('click', () => {
+                        // Toggle content visibility
+                        content.classList.toggle('hidden');
+                        // Change arrow icon based on open/close status
+                        if (content.classList.contains('hidden')) {
+                            icon.innerHTML = '&#9660;'; // Down arrow
+                        } else {
+                            icon.innerHTML = '&#9650;'; // Up arrow
+                        }
+                    });
+                }
+            });
+
+            // Function to display custom message box (replaces alert())
+            function showCustomMessageBox(message, isError = true) {
+                const msgBox = document.getElementById('quiz-message-box');
+                const msgText = document.getElementById('quiz-message-text');
+                
+                msgText.textContent = message;
+                msgBox.classList.remove('hidden');
+                
+                // Set background color based on message type (error or success)
+                if (isError) {
+                    msgBox.classList.remove('bg-green-500');
+                    msgBox.classList.add('bg-red-500');
+                } else {
+                    msgBox.classList.remove('bg-red-500');
+                    msgBox.classList.add('bg-green-500');
+                }
+
+                // Hide message box automatically after 5 seconds
+                setTimeout(() => {
+                    msgBox.classList.add('hidden');
+                }, 5000);
+            }
+
+            // Close custom message box when 'x' button is clicked
+            document.getElementById('quiz-message-close').addEventListener('click', () => {
+                document.getElementById('quiz-message-box').classList.add('hidden');
+            });
+
+
+            // Utility function to call Gemini API
+            async function callGeminiAPI(prompt, outputDiv, loadingDiv, successCallback, errorCallback, responseSchema = null) {
+                // Hide previous output and show loading indicator
+                outputDiv.classList.add('hidden');
+                loadingDiv.classList.remove('hidden');
+                
+                try {
+                    let chatHistory = [];
+                    chatHistory.push({ role: "user", parts: [{ text: prompt }] });
+                    
+                    const payload = { contents: chatHistory };
+                    // If a response schema is specified, add it to the generation config
+                    if (responseSchema) {
+                        payload.generationConfig = {
+                            responseMimeType: "application/json",
+                            responseSchema: responseSchema
+                        };
+                    }
+
+                    const apiKey = ""; // API key will be provided by the Canvas environment at runtime
+                    const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+
+                    const response = await fetch(apiUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+
+                    // Error handling if API response is not OK
+                    if (!response.ok) {
+                        const errorData = await response.json();
+                        console.error("API Error Response:", errorData);
+                        // Show a generic error message to the user
+                        showCustomMessageBox(`Terjadi kesalahan API: ${errorData.error.message || 'Unknown error'}`, true);
+                        throw new Error(`API request failed with status ${response.status}: ${errorData.error.message || 'Unknown error'}`);
+                    }
+
+                    const result = await response.json();
+                    console.log("Gemini API Raw Result:", result); // Log raw result for debugging
+
+                    // Check response structure and call success callback if data is found
+                    if (result.candidates && result.candidates.length > 0 &&
+                        result.candidates[0].content && result.candidates[0].content.parts &&
+                        result.candidates[0].content.parts.length > 0) {
+                        const responseContent = result.candidates[0].content.parts[0].text;
+                        successCallback(responseContent, responseSchema);
+                    } else {
+                        // Show a generic error message for unexpected response structure
+                        showCustomMessageBox("Respons API tidak terduga atau tidak ada konten.", true);
+                        throw new Error("Unexpected API response structure or no content.");
+                    }
+                } catch (error) {
+                    // Handle errors and call error callback
+                    console.error("Error calling Gemini API:", error);
+                    // The specific errorCallback for each feature will update its div
+                    errorCallback(error.message);
+                } finally {
+                    // Hide loading indicator and show output (even if there was an error)
+                    loadingDiv.classList.add('hidden');
+                    outputDiv.classList.remove('hidden');
+                }
+            }
+
+            // Gemini API Integration Logic for Practice Questions
+            async function generateQuestion(topic, outputDivId, loadingDivId) {
+                const outputDiv = document.getElementById(outputDivId);
+                const loadingDiv = document.getElementById(loadingDivId);
+                const questionTextDiv = outputDiv.querySelector(`#${outputDivId.replace('-output', '')}-question-text`);
+                const solutionTextDiv = outputDiv.querySelector(`#${outputDivId.replace('-output', '')}-solution-text`);
+
+                // Clear previous content
+                questionTextDiv.innerHTML = '';
+                solutionTextDiv.innerHTML = '';
+
+                // Prompt for Gemini API
+                const prompt = `Buatkan satu soal latihan OSN Matematika SMP tentang topik "${topic}" beserta solusinya. Soal dan solusi harus menggunakan notasi LaTeX untuk rumus matematika. Berikan respons dalam format JSON dengan kunci "question" dan "solution".`;
+                // Expected JSON response schema
+                const schema = {
+                    type: "OBJECT",
+                    properties: {
+                        "question": { "type": "STRING" },
+                        "solution": { "type": "STRING" }
+                    },
+                    "propertyOrdering": ["question", "solution"]
+                };
+
+                callGeminiAPI(
+                    prompt,
+                    outputDiv,
+                    loadingDiv,
+                    (responseContent) => {
+                        try {
+                            const parsedJson = JSON.parse(responseContent);
+                            questionTextDiv.innerHTML = parsedJson.question;
+                            solutionTextDiv.innerHTML = parsedJson.solution;
+                            // Request MathJax to render new formulas
+                            if (window.MathJax) {
+                                window.MathJax.typesetPromise([questionTextDiv, solutionTextDiv]).catch((err) => console.error("MathJax typesetting error:", err));
+                            }
+                        } catch (parseError) {
+                            console.error("JSON parsing error for question:", parseError);
+                            questionTextDiv.innerHTML = `<p class="text-red-500 error-message">Gagal memparsing respons soal. Coba lagi. (Error: ${parseError.message})</p>`;
+                            showCustomMessageBox("Gagal memparsing soal latihan. Respons API mungkin tidak valid.", true);
+                        }
+                    },
+                    (errorMessage) => {
+                        questionTextDiv.innerHTML = `<p class="text-red-500 error-message">Terjadi kesalahan saat memuat soal: ${errorMessage}. Pastikan koneksi internet Anda stabil.</p>`;
+                    },
+                    schema
+                );
+            }
+
+            // Gemini API Integration Logic for Explain Concept
+            async function explainConcept(topic, conceptInputId, outputDivId, loadingDivId) {
+                const conceptInput = document.getElementById(conceptInputId);
+                const outputDiv = document.getElementById(outputDivId);
+                const loadingDiv = document.getElementById(loadingDivId);
+                const explanationTextDiv = outputDiv.querySelector(`#${outputDivId.replace('-output', '')}-explanation-text`);
+
+                const concept = conceptInput.value.trim();
+                if (!concept) {
+                    explanationTextDiv.innerHTML = '<p class="text-red-500 error-message">Mohon masukkan konsep yang ingin dijelaskan.</p>';
+                    outputDiv.classList.remove('hidden');
+                    return;
+                }
+                explanationTextDiv.innerHTML = '';
+
+                // Prompt for Gemini API
+                const prompt = `Jelaskan konsep matematika "${concept}" dalam konteks OSN SMP, dengan bahasa yang mudah dipahami dan gunakan notasi LaTeX untuk rumus jika relevan. Topik utama: ${topic}. Berikan penjelasan yang ringkas dan padat.`;
+                
+                callGeminiAPI(
+                    prompt,
+                    outputDiv,
+                    loadingDiv,
+                    (responseContent) => {
+                        explanationTextDiv.innerHTML = responseContent;
+                        // Request MathJax to render new formulas
+                        if (window.MathJax) {
+                            window.MathJax.typesetPromise([explanationTextDiv]).catch((err) => console.error("MathJax typesetting error:", err));
+                        }
+                        conceptInput.value = ''; // Clear input on success
+                    },
+                    (errorMessage) => {
+                        explanationTextDiv.innerHTML = `<p class="text-red-500 error-message">Terjadi kesalahan saat memuat penjelasan: ${errorMessage}. Pastikan koneksi internet Anda stabil.</p>`;
+                    }
+                );
+            }
+
+            // Gemini API Integration Logic for Problem Solving Strategy
+            async function generateProblemStrategy(topic, strategyInputId, outputDivId, loadingDivId) {
+                const strategyInput = document.getElementById(strategyInputId);
+                const outputDiv = document.getElementById(outputDivId);
+                const loadingDiv = document.getElementById(loadingDivId);
+                const strategyTextDiv = outputDiv.querySelector(`#${outputDivId.replace('-output', '')}-strategy-text`);
+
+                const problemType = strategyInput.value.trim();
+                if (!problemType) {
+                    strategyTextDiv.innerHTML = '<p class="text-red-500 error-message">Mohon masukkan tipe soal yang ingin dijelaskan strateginya.</p>';
+                    outputDiv.classList.remove('hidden');
+                    return;
+                }
+                strategyTextDiv.innerHTML = '';
+
+                // Prompt for Gemini API
+                const prompt = `Berikan strategi langkah demi langkah atau tips untuk memecahkan soal matematika OSN SMP yang bertipe "${problemType}" dalam topik "${topic}". Jelaskan dengan bahasa yang mudah dipahami dan gunakan notasi LaTeX untuk rumus jika relevan. Fokus pada pendekatan umum dan langkah-langkah berpikir.`;
+                
+                callGeminiAPI(
+                    prompt,
+                    outputDiv,
+                    loadingDiv,
+                    (responseContent) => {
+                        strategyTextDiv.innerHTML = responseContent;
+                        // Request MathJax to render new formulas
+                        if (window.MathJax) {
+                            window.MathJax.typesetPromise([strategyTextDiv]).catch((err) => console.error("MathJax typesetting error:", err));
+                        }
+                        strategyInput.value = ''; // Clear input on success
+                    },
+                    (errorMessage) => {
+                        strategyTextDiv.innerHTML = `<p class="text-red-500 error-message">Terjadi kesalahan saat memuat strategi: ${errorMessage}. Pastikan koneksi internet Anda stabil.</p>`;
+                    }
+                );
+            }
+
+            // Gemini API Integration Logic for Check Answer
+            async function checkAnswer(topic, inputId, outputDivId, loadingDivId) {
+                const checkInput = document.getElementById(inputId);
+                const outputDiv = document.getElementById(outputDivId);
+                const loadingDiv = document.getElementById(loadingDivId);
+                const feedbackTextDiv = outputDiv.querySelector(`#${outputDivId.replace('-output', '')}-feedback-text`);
+
+                const inputContent = checkInput.value.trim();
+                if (!inputContent) {
+                    feedbackTextDiv.innerHTML = '<p class="text-red-500 error-message">Mohon masukkan soal dan jawaban yang ingin diperiksa.</p>';
+                    outputDiv.classList.remove('hidden');
+                    return;
+                }
+                feedbackTextDiv.innerHTML = '';
+
+                // Prompt for Gemini API
+                const prompt = `Saya memiliki soal matematika OSN SMP dan jawaban saya. Tolong periksa apakah jawaban saya benar atau salah, dan berikan umpan balik serta penjelasan singkat jika salah. Gunakan notasi LaTeX untuk rumus jika relevan. Topik soal ini adalah ${topic}. Berikut soal dan jawaban saya:\n\n${inputContent}`;
+                
+                callGeminiAPI(
+                    prompt,
+                    outputDiv,
+                    loadingDiv,
+                    (responseContent) => {
+                        feedbackTextDiv.innerHTML = responseContent;
+                        // Request MathJax to render new formulas
+                        if (window.MathJax) {
+                            window.MathJax.typesetPromise([feedbackTextDiv]).catch((err) => console.error("MathJax typesetting error:", err));
+                        }
+                        checkInput.value = ''; // Clear input on success
+                    },
+                    (errorMessage) => {
+                        feedbackTextDiv.innerHTML = `<p class="text-red-500 error-message">Terjadi kesalahan saat memuat umpan balik: ${errorMessage}. Pastikan koneksi internet Anda stabil.</p>`;
+                    }
+                );
+            }
+
+
+            // Event Listeners for Practice Question Generator
+            document.getElementById('generate-bilangan-question').addEventListener('click', () => {
+                generateQuestion('Bilangan', 'bilangan-output', 'bilangan-loading');
+            });
+
+            document.getElementById('generate-aljabar-question').addEventListener('click', () => {
+                generateQuestion('Aljabar', 'aljabar-output', 'aljabar-loading');
+            });
+
+            document.getElementById('generate-geometri-question').addEventListener('click', () => {
+                generateQuestion('Geometri', 'geometri-output', 'geometri-loading');
+            });
+
+            document.getElementById('generate-data-peluang-question').addEventListener('click', () => {
+                generateQuestion('Data & Peluang', 'data-peluang-output', 'data-peluang-loading');
+            });
+
+            // Event Listeners for Explain Concept
+            document.getElementById('explain-bilangan-concept').addEventListener('click', () => {
+                explainConcept('Bilangan', 'bilangan-concept-input', 'bilangan-concept-output', 'bilangan-concept-loading');
+            });
+
+            document.getElementById('explain-aljabar-concept').addEventListener('click', () => {
+                explainConcept('Aljabar', 'aljabar-concept-input', 'aljabar-concept-output', 'aljabar-concept-loading');
+            });
+
+            document.getElementById('explain-geometri-concept').addEventListener('click', () => {
+                explainConcept('Geometri', 'geometri-concept-input', 'geometri-concept-output', 'geometri-concept-loading');
+            });
+
+            document.getElementById('explain-data-peluang-concept').addEventListener('click', () => {
+                explainConcept('Data & Peluang', 'data-peluang-concept-input', 'data-peluang-concept-output', 'data-peluang-concept-loading');
+            });
+
+            // Event Listeners for Problem Solving Strategy
+            document.getElementById('generate-bilangan-strategy').addEventListener('click', () => {
+                generateProblemStrategy('Bilangan', 'bilangan-strategy-input', 'bilangan-strategy-output', 'bilangan-strategy-loading');
+            });
+
+            document.getElementById('generate-aljabar-strategy').addEventListener('click', () => {
+                generateProblemStrategy('Aljabar', 'aljabar-strategy-input', 'aljabar-strategy-output', 'aljabar-strategy-loading');
+            });
+
+            document.getElementById('generate-geometri-strategy').addEventListener('click', () => {
+                generateProblemStrategy('Geometri', 'geometri-strategy-input', 'geometri-strategy-output', 'geometri-strategy-loading');
+            });
+
+            document.getElementById('generate-data-peluang-strategy').addEventListener('click', () => {
+                generateProblemStrategy('Data & Peluang', 'data-peluang-strategy-input', 'data-peluang-strategy-output', 'data-peluang-loading');
+            });
+
+            // Event Listeners for Check Answer
+            document.getElementById('check-bilangan-answer').addEventListener('click', () => {
+                checkAnswer('Bilangan', 'bilangan-check-input', 'bilangan-check-output', 'bilangan-check-loading');
+            });
+
+            document.getElementById('check-aljabar-answer').addEventListener('click', () => {
+                checkAnswer('Aljabar', 'aljabar-check-input', 'aljabar-check-output', 'aljabar-check-loading');
+            });
+
+            document.getElementById('check-geometri-answer').addEventListener('click', () => {
+                checkAnswer('Geometri', 'geometri-check-input', 'geometri-check-output', 'geometri-check-loading');
+            });
+
+            document.getElementById('check-data-peluang-answer').addEventListener('click', () => {
+                checkAnswer('Data & Peluang', 'data-peluang-check-input', 'data-peluang-check-output', 'data-peluang-check-loading');
+            });
+
+            // --- Interactive Quiz Mode Logic ---
+            let currentQuizQuestions = [];
+            let currentQuestionIndex = 0;
+            let quizScore = 0;
+            let quizResultsSummary = [];
+
+            const quizTopicSelect = document.getElementById('quiz-topic');
+            const quizNumQuestionsInput = document.getElementById('quiz-num-questions');
+            const quizDifficultySelect = document.getElementById('quiz-difficulty');
+            const startQuizButton = document.getElementById('start-quiz-button');
+            const quizLoadingDiv = document.getElementById('quiz-loading');
+            const quizAreaDiv = document.getElementById('quiz-area');
+            const quizQuestionCounter = document.getElementById('quiz-question-counter');
+            const quizQuestionText = document.getElementById('quiz-question-text');
+            const quizAnswerInput = document.getElementById('quiz-answer-input');
+            const submitQuizAnswerButton = document.getElementById('submit-quiz-answer');
+            const quizFeedbackLoadingDiv = document.getElementById('quiz-feedback-loading'); // New loading for feedback
+            const quizFeedbackDiv = document.getElementById('quiz-feedback');
+            const nextQuizQuestionButton = document.getElementById('next-quiz-question');
+            const showQuizResultsButton = document.getElementById('show-quiz-results');
+            const quizResultsDiv = document.getElementById('quiz-results');
+            const quizScoreDiv = document.getElementById('quiz-score');
+            const quizSummaryDiv = document.getElementById('quiz-summary');
+            const retakeQuizButton = document.getElementById('retake-quiz');
+
+            startQuizButton.addEventListener('click', async () => {
+                const topic = quizTopicSelect.value;
+                const numQuestions = parseInt(quizNumQuestionsInput.value);
+                const difficulty = quizDifficultySelect.value;
+
+                // Input validation for number of questions
+                if (isNaN(numQuestions) || numQuestions < 1 || numQuestions > 10) {
+                    showCustomMessageBox('Jumlah soal harus antara 1 dan 10.', true); 
+                    return;
+                }
+
+                // Hide quiz area and results, show loading
+                quizAreaDiv.classList.add('hidden');
+                quizResultsDiv.classList.add('hidden');
+                quizLoadingDiv.classList.remove('hidden');
+                
+                // Reset quiz status
+                currentQuizQuestions = [];
+                currentQuestionIndex = 0;
+                quizScore = 0;
+                quizResultsSummary = [];
+
+                // Prompt for Gemini API to generate quiz questions
+                const prompt = `Buatkan ${numQuestions} soal kuis OSN Matematika SMP tentang topik "${topic}" dengan tingkat kesulitan "${difficulty}". Setiap soal harus memiliki format JSON dengan kunci "question", "correct_answer", dan "explanation". Pastikan semua rumus menggunakan notasi LaTeX.`;
+                // Expected JSON response schema for quiz questions
+                const schema = {
+                    type: "ARRAY",
+                    items: {
+                        type: "OBJECT",
+                        properties: {
+                            "question": { "type": "STRING" },
+                            "correct_answer": { "type": "STRING" },
+                            "explanation": { "type": "STRING" }
+                        },
+                        "propertyOrdering": ["question", "correct_answer", "explanation"]
+                    }
+                };
+
+                await callGeminiAPI(
+                    prompt,
+                    quizAreaDiv, // This div will be hidden and then shown
+                    quizLoadingDiv,
+                    (responseContent) => {
+                        try {
+                            currentQuizQuestions = JSON.parse(responseContent);
+                            if (currentQuizQuestions.length > 0) {
+                                displayNextQuizQuestion(); // Display the first question if successful
+                                quizAreaDiv.classList.remove('hidden');
+                            } else {
+                                quizQuestionText.innerHTML = '<p class="text-red-500 error-message">Tidak dapat memuat soal kuis. Coba lagi.</p>';
+                                showCustomMessageBox("Tidak dapat memuat soal kuis. Respons API mungkin kosong.", true);
+                            }
+                        } catch (parseError) {
+                            console.error("JSON parsing error for quiz questions:", parseError);
+                            quizQuestionText.innerHTML = `<p class="text-red-500 error-message">Gagal memparsing soal kuis. Coba lagi. (Error: ${parseError.message})</p>`;
+                            showCustomMessageBox("Gagal memparsing soal kuis. Respons API mungkin tidak valid.", true);
+                        }
+                    },
+                    (errorMessage) => {
+                        quizQuestionText.innerHTML = `<p class="text-red-500 error-message">Terjadi kesalahan saat memuat kuis: ${errorMessage}. Pastikan koneksi internet Anda stabil.</p>`;
+                    },
+                    schema
+                );
+            });
+
+            submitQuizAnswerButton.addEventListener('click', async () => {
+                const currentQuestion = currentQuizQuestions[currentQuestionIndex];
+                const userAnswer = quizAnswerInput.value.trim();
+
+                if (!userAnswer) {
+                    showCustomMessageBox('Mohon masukkan jawaban Anda.', true);
+                    return;
+                }
+
+                // Hide submit button, show feedback loading
+                submitQuizAnswerButton.classList.add('hidden');
+                quizFeedbackDiv.classList.add('hidden');
+                quizFeedbackLoadingDiv.classList.remove('hidden');
+
+                // Prompt Gemini to check the answer
+                const checkPrompt = `Soal: "${currentQuestion.question}"\nJawaban Benar: "${currentQuestion.correct_answer}"\nJawaban Pengguna: "${userAnswer}"\n\nApakah jawaban pengguna benar secara matematis? Berikan umpan balik singkat dan penjelasan jika salah. Gunakan notasi LaTeX untuk rumus jika relevan. Berikan respons dalam format JSON dengan kunci "is_correct" (boolean) dan "feedback" (string).`;
+                const checkSchema = {
+                    type: "OBJECT",
+                    properties: {
+                        "is_correct": { "type": "BOOLEAN" },
+                        "feedback": { "type": "STRING" }
+                    },
+                    "propertyOrdering": ["is_correct", "feedback"]
+                };
+
+                await callGeminiAPI(
+                    checkPrompt,
+                    quizFeedbackDiv, // This will be hidden and shown by callGeminiAPI
+                    quizFeedbackLoadingDiv,
+                    (responseContent) => {
+                        try {
+                            const checkResult = JSON.parse(responseContent);
+                            const isCorrect = checkResult.is_correct;
+                            const feedback = checkResult.feedback;
+
+                            quizFeedbackDiv.classList.remove('hidden');
+                            if (isCorrect) {
+                                quizScore++;
+                                quizFeedbackDiv.className = 'mt-3 p-3 rounded-md bg-green-100 text-green-700';
+                                quizFeedbackDiv.innerHTML = `<strong>Benar!</strong> ${feedback}`;
+                            } else {
+                                quizFeedbackDiv.className = 'mt-3 p-3 rounded-md bg-red-100 text-red-700';
+                                quizFeedbackDiv.innerHTML = `<strong>Salah.</strong> ${feedback}`;
+                            }
+
+                            // Store quiz results for final summary
+                            quizResultsSummary.push({
+                                question: currentQuestion.question,
+                                user_answer: userAnswer,
+                                correct_answer: currentQuestion.correct_answer,
+                                is_correct: isCorrect,
+                                explanation: currentQuestion.explanation // Still use the original question's explanation
+                            });
+
+                            // Set visibility of quiz navigation buttons
+                            if (currentQuestionIndex < currentQuizQuestions.length - 1) {
+                                nextQuizQuestionButton.classList.remove('hidden');
+                            } else {
+                                showQuizResultsButton.classList.remove('hidden');
+                            }
+                            // Re-render MathJax for feedback
+                            if (window.MathJax) {
+                                window.MathJax.typesetPromise([quizFeedbackDiv]).catch((err) => console.error("MathJax typesetting error:", err));
+                            }
+                        } catch (parseError) {
+                            console.error("JSON parsing error for quiz feedback:", parseError);
+                            quizFeedbackDiv.innerHTML = `<p class="text-red-500 error-message">Gagal memparsing umpan balik. Coba lagi. (Error: ${parseError.message})</p>`;
+                            quizFeedbackDiv.classList.remove('hidden'); // Ensure feedback div is visible
+                            submitQuizAnswerButton.classList.remove('hidden'); // Allow user to retry
+                            showCustomMessageBox("Gagal memparsing umpan balik kuis. Respons API mungkin tidak valid.", true);
+                        }
+                    },
+                    (errorMessage) => {
+                        console.error("Error checking answer with Gemini API:", errorMessage);
+                        quizFeedbackDiv.innerHTML = `<p class="text-red-500 error-message">Terjadi kesalahan saat memeriksa jawaban: ${errorMessage}. Pastikan koneksi internet Anda stabil.</p>`;
+                        quizFeedbackDiv.classList.remove('hidden'); // Ensure feedback div is visible
+                        submitQuizAnswerButton.classList.remove('hidden'); // Allow user to retry
+                    },
+                    checkSchema
+                );
+            });
+
+            nextQuizQuestionButton.addEventListener('click', () => {
+                currentQuestionIndex++;
+                displayNextQuizQuestion(); // Display next question
+                // Reset UI for new question
+                quizFeedbackDiv.classList.add('hidden');
+                nextQuizQuestionButton.classList.add('hidden');
+                showQuizResultsButton.classList.add('hidden'); // Ensure this is hidden for new questions
+                submitQuizAnswerButton.classList.remove('hidden');
+                quizAnswerInput.value = '';
+            });
+
+            showQuizResultsButton.addEventListener('click', () => {
+                // Hide quiz area, show results
+                quizAreaDiv.classList.add('hidden');
+                quizResultsDiv.classList.remove('hidden');
+                quizScoreDiv.innerHTML = `Skor Anda: ${quizScore} dari ${currentQuizQuestions.length}`;
+                
+                // Create detailed answer summary
+                let summaryHtml = '<h5 class="font-semibold text-md mb-2">Detail Jawaban:</h5>';
+                quizResultsSummary.forEach((item, index) => {
+                    summaryHtml += `<div class="mb-4 p-3 rounded-md ${item.is_correct ? 'bg-green-50' : 'bg-red-50'}">`;
+                    summaryHtml += `<p class="font-semibold">Soal ${index + 1}:</p><div class="mb-1">${item.question}</div>`;
+                    summaryHtml += `<p>Jawaban Anda: <strong>${item.user_answer}</strong></p>`;
+                    summaryHtml += `<p>Jawaban Benar: <strong>${item.correct_answer}</strong></p>`;
+                    if (!item.is_correct) {
+                        summaryHtml += `<p>Penjelasan: ${item.explanation}</p>`;
+                    }
+                    summaryHtml += `</div>`;
+                });
+                quizSummaryDiv.innerHTML = summaryHtml;
+                // Re-render MathJax for results summary
+                if (window.MathJax) {
+                    window.MathJax.typesetPromise([quizSummaryDiv]).catch((err) => console.error("MathJax typesetting error:", err));
+                }
+                showQuizResultsButton.classList.add('hidden');
+            });
+
+            retakeQuizButton.addEventListener('click', () => {
+                quizResultsDiv.classList.add('hidden');
+                startQuizButton.click(); // Simulate clicking the start quiz button again
+            });
+
+            function displayNextQuizQuestion() {
+                const question = currentQuizQuestions[currentQuestionIndex];
+                quizQuestionCounter.textContent = `Soal ${currentQuestionIndex + 1}/${currentQuizQuestions.length}:`;
+                quizQuestionText.innerHTML = question.question;
+                // Re-render MathJax for question text
+                if (window.MathJax) {
+                    window.MathJax.typesetPromise([quizQuestionText]).catch((err) => console.error("MathJax typesetting error:", err));
+                }
+                quizAnswerInput.value = '';
+                quizFeedbackDiv.classList.add('hidden');
+                nextQuizQuestionButton.classList.add('hidden');
+                showQuizResultsButton.classList.add('hidden');
+                submitQuizAnswerButton.classList.remove('hidden');
+            }
+
+            // --- Formula Sheet Generator Logic ---
+            const formulaTopicSelect = document.getElementById('formula-topic');
+            const generateFormulaSheetButton = document.getElementById('generate-formula-sheet');
+            const formulaLoadingDiv = document.getElementById('formula-loading');
+            const formulaOutputDiv = document.getElementById('formula-output');
+            const formulaTextDiv = document.getElementById('formula-text');
+
+            generateFormulaSheetButton.addEventListener('click', async () => {
+                const topic = formulaTopicSelect.value;
+                formulaTextDiv.innerHTML = '';
+                formulaOutputDiv.classList.add('hidden');
+                formulaLoadingDiv.classList.remove('hidden');
+
+                // Prompt for Gemini API
+                const prompt = `Buatkan lembar rumus lengkap untuk topik "${topic}" dalam konteks OSN Matematika SMP. Sertakan semua rumus penting dengan notasi LaTeX dan penjelasan singkat. Format sebagai daftar poin atau tabel jika relevan.`;
+                
+                await callGeminiAPI(
+                    prompt,
+                    formulaOutputDiv,
+                    formulaLoadingDiv,
+                    (responseContent) => {
+                        formulaTextDiv.innerHTML = responseContent;
+                        // Re-render MathJax for formula sheet
+                        if (window.MathJax) {
+                            window.MathJax.typesetPromise([formulaTextDiv]).catch((err) => console.error("MathJax typesetting error:", err));
+                        }
+                    },
+                    (errorMessage) => {
+                        formulaTextDiv.innerHTML = `<p class="text-red-500 error-message">Terjadi kesalahan saat membuat lembar rumus: ${errorMessage}. Pastikan koneksi internet Anda stabil.</p>`;
+                    }
+                );
+            });
+
+            // --- Deep Concept Discussion Logic ---
+            const deepConceptInput = document.getElementById('deep-concept-input');
+            const askDeepConceptButton = document.getElementById('ask-deep-concept');
+            const deepConceptLoadingDiv = document.getElementById('deep-concept-loading');
+            const deepConceptOutputDiv = document.getElementById('deep-concept-output');
+            const deepConceptTextDiv = document.getElementById('deep-concept-text');
+
+            askDeepConceptButton.addEventListener('click', async () => {
+                const concept = deepConceptInput.value.trim();
+                if (!concept) {
+                    deepConceptTextDiv.innerHTML = '<p class="text-red-500 error-message">Mohon masukkan konsep yang ingin didiskusikan.</p>';
+                    deepConceptOutputDiv.classList.remove('hidden');
+                    return;
+                }
+                deepConceptTextDiv.innerHTML = '';
+                deepConceptOutputDiv.classList.add('hidden');
+                deepConceptLoadingDiv.classList.remove('hidden');
+
+                // Prompt for Gemini API
+                const prompt = `Jelaskan konsep matematika "${concept}" secara mendalam, termasuk contoh, aplikasi, dan hubungannya dengan konsep lain yang relevan untuk OSN Matematika SMP. Gunakan notasi LaTeX untuk rumus. Jelaskan seolah-olah sedang berdiskusi dengan siswa SMP yang ingin memahami lebih dalam.`;
+                
+                await callGeminiAPI(
+                    prompt,
+                    deepConceptOutputDiv,
+                    deepConceptLoadingDiv,
+                    (responseContent) => {
+                        deepConceptTextDiv.innerHTML = responseContent;
+                        // Re-render MathJax for deep explanation
+                        if (window.MathJax) {
+                            window.MathJax.typesetPromise([deepConceptTextDiv]).catch((err) => console.error("MathJax typesetting error:", err));
+                        }
+                        deepConceptInput.value = ''; // Clear input on success
+                    },
+                    (errorMessage) => {
+                        deepConceptTextDiv.innerHTML = `<p class="text-red-500 error-message">Terjadi kesalahan saat memuat penjelasan: ${errorMessage}. Pastikan koneksi internet Anda stabil.</p>`;
+                    }
+                );
+            });
+
+            // --- Common Error Analysis Logic ---
+            const errorTopicSelect = document.getElementById('error-topic');
+            const analyzeCommonErrorButton = document.getElementById('analyze-common-error');
+            const errorLoadingDiv = document.getElementById('error-loading');
+            const errorOutputDiv = document.getElementById('error-output');
+            const errorTextDiv = document.getElementById('error-text');
+
+            analyzeCommonErrorButton.addEventListener('click', async () => {
+                const topic = errorTopicSelect.value;
+                errorTextDiv.innerHTML = '';
+                errorOutputDiv.classList.add('hidden');
+                errorLoadingDiv.classList.remove('hidden');
+
+                // Prompt for Gemini API
+                const prompt = `Jelaskan 3-5 kesalahan umum yang sering dilakukan siswa OSN Matematika SMP dalam topik "${topic}", beserta penjelasan mengapa kesalahan itu terjadi dan bagaimana cara menghindarinya. Gunakan notasi LaTeX untuk rumus jika relevan.`;
+                
+                await callGeminiAPI(
+                    prompt,
+                    errorOutputDiv,
+                    errorLoadingDiv,
+                    (responseContent) => {
+                        errorTextDiv.innerHTML = responseContent;
+                        // Re-render MathJax for error analysis
+                        if (window.MathJax) {
+                            window.MathJax.typesetPromise([errorTextDiv]).catch((err) => console.error("MathJax typesetting error:", err));
+                        }
+                    },
+                    (errorMessage) => {
+                        errorTextDiv.innerHTML = `<p class="text-red-500 error-message">Terjadi kesalahan saat menganalisis kesalahan: ${errorMessage}. Pastikan koneksi internet Anda stabil.</p>`;
+                    }
+                );
+            });
+
+            // --- Concept Comparison Logic ---
+            const concept1Input = document.getElementById('concept1-input');
+            const concept2Input = document.getElementById('concept2-input');
+            const compareConceptsButton = document.getElementById('compare-concepts');
+            const comparisonLoadingDiv = document.getElementById('comparison-loading');
+            const comparisonOutputDiv = document.getElementById('comparison-output');
+            const comparisonTextDiv = document.getElementById('comparison-text');
+
+            compareConceptsButton.addEventListener('click', async () => {
+                const concept1 = concept1Input.value.trim();
+                const concept2 = concept2Input.value.trim();
+
+                if (!concept1 || !concept2) {
+                    comparisonTextDiv.innerHTML = '<p class="text-red-500 error-message">Mohon masukkan kedua konsep yang ingin dibandingkan.</p>';
+                    comparisonOutputDiv.classList.remove('hidden');
+                    return;
+                }
+                comparisonTextDiv.innerHTML = '';
+                comparisonOutputDiv.classList.add('hidden');
+                comparisonLoadingDiv.classList.remove('hidden');
+
+                // Prompt for Gemini API
+                const prompt = `Bandingkan dua konsep matematika "${concept1}" dan "${concept2}" dalam konteks OSN Matematika SMP. Jelaskan persamaan dan perbedaannya secara detail, termasuk contoh dan kapan masing-masing digunakan. Gunakan notasi LaTeX untuk rumus jika relevan.`;
+                
+                await callGeminiAPI(
+                    prompt,
+                    comparisonOutputDiv,
+                    comparisonLoadingDiv,
+                    (responseContent) => {
+                        comparisonTextDiv.innerHTML = responseContent;
+                        // Re-render MathJax for concept comparison
+                        if (window.MathJax) {
+                            window.MathJax.typesetPromise([comparisonTextDiv]).catch((err) => console.error("MathJax typesetting error:", err));
+                        }
+                        concept1Input.value = ''; // Clear inputs on success
+                        concept2Input.value = '';
+                    },
+                    (errorMessage) => {
+                        comparisonTextDiv.innerHTML = `<p class="text-red-500 error-message">Terjadi kesalahan saat membandingkan konsep: ${errorMessage}. Pastikan koneksi internet Anda stabil.</p>`;
+                    }
+                );
+            });
+        });
+    </script>
+</body>
+</html>
